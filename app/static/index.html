@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tư Vấn Tuyển Sinh</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Hệ Thống Tư Vấn Tuyển Sinh AI</h1>
+            <p>Phân tích dữ liệu & Gợi ý trường/ngành với AI</p>
+        </header>
+
+        <main>
+            <div class="form-card">
+                <div class="form-group">
+                    <label>Điểm thi THPT Quốc Gia (đã tính theo tổ hợp):</label>
+                    <input type="number" id="diem_thi" step="0.01" min="0" max="30" placeholder="Ví dụ: 26.5">
+                </div>
+
+                <div class="form-group">
+                    <label>Khu vực ưu tiên:</label>
+                    <select id="khu_vuc">
+                        <option value="KV3">KV3 (Không ưu tiên)</option>
+                        <option value="KV2">KV2 (+0.5 điểm)</option>
+                        <option value="KV2NT">KV2-NT (+0.25 điểm)</option>
+                        <option value="KV1">KV1 (+0.75 điểm)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ngành ưu tiên / Mã ngành:</label>
+                    <input type="text" id="ma_nganh" placeholder="Ví dụ: 7480201">
+                </div>
+
+                <div class="form-group">
+                    <label>Câu hỏi của bạn (để AI giải đáp chi tiết):</label>
+                    <textarea id="query" rows="3" placeholder="Với 26.5 điểm, tôi có khả năng đậu ngành Khoa học Máy tính Đại học Bách Khoa không?"></textarea>
+                </div>
+
+                <button id="btn-submit" onclick="hoiDap()">Khám Phá Cơ Hội</button>
+            </div>
+
+            <div class="result-card" id="result-card" style="display: none;">
+                <h3>🤖 AI Tư Vấn:</h3>
+                <div id="loading" style="display: none;">Đang phân tích dữ liệu lịch sử và tổng hợp thông tin...</div>
+                <div id="result-content"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

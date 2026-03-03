@@ -1,0 +1,50 @@
+D:\PROJECT_AI
+├── .env                  # Tệp lưu trữ các biến môi trường (như API key, thiết lập bảo mật).
+├── .gitignore            # Danh sách các tệp/thư mục bị bỏ qua không đẩy lên Git.
+├── README.md             # Tài liệu giới thiệu và hướng dẫn cài đặt dự án.
+├── requirements.txt      # Danh sách các thư viện Python cần cài đặt.
+│
+├── app/                  # Chứa mã nguồn của ứng dụng Web (có thể là FastAPI hoặc Flask)
+│   ├── main.py           # Điểm khởi chạy của ứng dụng, thiết lập cấu hình server.
+│   ├── routes.py         # Định nghĩa các API endpoints (đường dẫn xử lý request).
+│   ├── schema.py         # Định nghĩa cấu trúc dữ liệu mô hình vào/ra (Pydantic models).
+│   └── static/           # Lưu trữ các file tĩnh cho giao diện web.
+│       ├── index.html    # Giao diện chính của ứng dụng.
+│       ├── css/style.css # Giao diện và định dạng web.
+│       └── js/app.js     # Chứa logic giao diện người dùng frontend.
+│
+├── data/                 # Thư mục lưu trữ dữ liệu các loại
+│   ├── processed/        # Dữ liệu đã qua làm sạch và xử lý, sẵn sàng để huấn luyện.
+│   │   ├── diem_chuan_full.csv, feature_engineered.csv, training_data.csv
+│   ├── rag_documents/    # Tài liệu dạng văn bản để cung cấp kiến thức nền tảng cho hệ thống RAG.
+│   │   ├── mo_ta_nganh.txt, thong_tin_truong.txt 
+│   └── raw/              # Dữ liệu thô gốc ban đầu thu thập được.
+│       ├── diem_chuan_2023.csv, diem_chuan_2024.csv, to_hop_mon.csv, uu_tien.csv
+│
+├── models/               # Thư mục lưu trữ các mô hình AI/ML
+│   ├── logistic_regression.pkl, random_forest.pkl # Các mô hình Machine Learning đã được huấn luyện.
+│   └── scaler.pkl        # Trọng số chuẩn hóa dữ liệu.
+│
+├── vector_db/            # Thư mục cơ sở dữ liệu vector dùng cho kỹ thuật tìm kiếm trong RAG.
+│   └── chroma_db/        # Cơ sở dữ liệu vector dùng cho kỹ thuật tìm kiếm trong RAG.
+│
+├── notebooks/            # Các file Jupyter Notebook dùng cho nghiên cứu và thử nghiệm (R&D)
+│   ├── 01_data_cleaning.ipynb       # Khảo sát và làm sạch dữ liệu.
+│   ├── 02_feature_engineering.ipynb # Trích xuất và xây dựng các đặc trưng mới.
+│   ├── 03_train_ml_model.ipynb      # Huấn luyện mô hình và theo dõi.
+│   └── 04_evaluation.ipynb          # Đánh giá hiệu suất của mô hình đã chọn.
+│
+├── reports/              # Thư mục phục vụ báo cáo
+│   └── figures/          # Các biểu đồ và hình ảnh đánh giá quá trình EDA và Machine Learning.
+│
+└── src/                  # Mã nguồn chính (Core module) của hệ thống pipeline học máy
+    ├── data_processing/  # Script xử lý dữ liệu đầu vào.
+    │   ├── feature_engineering.py, generate_synthetic.py, merge_data.py, priority_score.py
+    ├── ml_model/         # Các script cốt lõi để chạy quy trình học máy.
+    │   ├── evaluate.py, predict.py, train.py
+    ├── pipeline/         # Công cụ tự động hoá dây chuyền.
+    │   └── inference_pipeline.py  # Pipeline dự đoán khi chạy thực tế (production).
+    ├── rag/              # Khối mã nguồn cho hệ thống RAG (Retrieval-Augmented Generation).
+    │   ├── build_index.py, embedder.py, retriever.py, vector_store.py
+    └── utils/            # Các công cụ tiện ích phụ trợ trợ giúp dự án.
+        └── config.py     # Thiết lập tham số, đường dẫn mặc định trong dự án.

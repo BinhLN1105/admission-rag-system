@@ -1,0 +1,51 @@
+﻿ma_truong,ten_truong,ma_nganh,ten_nganh,ma_to_hop,nam,diem_chuan,chi_tieu,phuong_thuc
+BKA,ĐH Bách Khoa Hà Nội,7480201,Khoa học Máy tính,A00,2023,27.0,150,THPT
+BKA,ĐH Bách Khoa Hà Nội,7480201,Khoa học Máy tính,A01,2023,27.0,150,THPT
+BKA,ĐH Bách Khoa Hà Nội,7480107,Trí tuệ Nhân tạo,A00,2023,28.0,80,THPT
+BKA,ĐH Bách Khoa Hà Nội,7480107,Trí tuệ Nhân tạo,A01,2023,28.0,100,THPT
+BKA,ĐH Bách Khoa Hà Nội,7520201,Kỹ thuật Điện tử - Viễn thông,A00,2023,25.5,150,THPT
+BKA,ĐH Bách Khoa Hà Nội,7520201,Kỹ thuật Điện tử - Viễn thông,A01,2023,25.5,100,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480201,Khoa học Máy tính,A00,2023,27.5,80,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480201,Khoa học Máy tính,A01,2023,27.5,80,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480101,Công nghệ Thông tin,A00,2023,26.0,150,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480101,Công nghệ Thông tin,A01,2023,26.0,80,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480101,Công nghệ Thông tin,D01,2023,26.0,120,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480107,Trí tuệ Nhân tạo,A00,2023,28.0,100,THPT
+UET,ĐH Công nghệ - ĐHQGHN,7480107,Trí tuệ Nhân tạo,A01,2023,28.0,80,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7480101,Công nghệ Thông tin,A00,2023,25.0,120,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7480101,Công nghệ Thông tin,A01,2023,25.0,100,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7480101,Công nghệ Thông tin,D01,2023,25.0,120,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7480201,Khoa học Máy tính,A00,2023,26.5,100,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7480201,Khoa học Máy tính,A01,2023,26.5,150,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7440112,Khoa học Dữ liệu,A00,2023,26.0,80,THPT
+UIT,ĐH Công nghệ Thông tin TP.HCM,7440112,Khoa học Dữ liệu,A01,2023,26.0,120,THPT
+NEU,ĐH Kinh tế Quốc dân,7340101,Quản trị Kinh doanh,A00,2023,26.5,80,THPT
+NEU,ĐH Kinh tế Quốc dân,7340101,Quản trị Kinh doanh,D01,2023,26.5,150,THPT
+NEU,ĐH Kinh tế Quốc dân,7340101,Quản trị Kinh doanh,D07,2023,26.5,120,THPT
+NEU,ĐH Kinh tế Quốc dân,7340201,Tài chính - Ngân hàng,A00,2023,25.5,120,THPT
+NEU,ĐH Kinh tế Quốc dân,7340201,Tài chính - Ngân hàng,D01,2023,25.5,100,THPT
+NEU,ĐH Kinh tế Quốc dân,7340201,Tài chính - Ngân hàng,D07,2023,25.5,120,THPT
+FTU,ĐH Ngoại thương,7340101,Quản trị Kinh doanh,A00,2023,27.0,120,THPT
+FTU,ĐH Ngoại thương,7340101,Quản trị Kinh doanh,D01,2023,27.0,80,THPT
+FTU,ĐH Ngoại thương,7340101,Quản trị Kinh doanh,D07,2023,27.0,150,THPT
+FTU,ĐH Ngoại thương,7220201,Ngôn ngữ Anh,D01,2023,28.0,80,THPT
+PTIT,ĐH Bưu chính Viễn thông,7480101,Công nghệ Thông tin,A00,2023,22.0,80,THPT
+PTIT,ĐH Bưu chính Viễn thông,7480101,Công nghệ Thông tin,A01,2023,22.0,120,THPT
+PTIT,ĐH Bưu chính Viễn thông,7480101,Công nghệ Thông tin,D01,2023,22.0,150,THPT
+PTIT,ĐH Bưu chính Viễn thông,7480202,Mạng máy tính và TT,A00,2023,21.5,80,THPT
+PTIT,ĐH Bưu chính Viễn thông,7480202,Mạng máy tính và TT,A01,2023,21.5,80,THPT
+HUST,ĐH Khoa học Tự nhiên HN,7480201,Khoa học Máy tính,A00,2023,25.0,120,THPT
+HUST,ĐH Khoa học Tự nhiên HN,7480201,Khoa học Máy tính,A01,2023,25.0,60,THPT
+HUST,ĐH Khoa học Tự nhiên HN,7440112,Khoa học Dữ liệu,A00,2023,24.5,150,THPT
+HUST,ĐH Khoa học Tự nhiên HN,7440112,Khoa học Dữ liệu,A01,2023,24.5,60,THPT
+DUT,ĐH Bách Khoa Đà Nẵng,7480101,Công nghệ Thông tin,A00,2023,21.0,120,THPT
+DUT,ĐH Bách Khoa Đà Nẵng,7480101,Công nghệ Thông tin,A01,2023,21.0,100,THPT
+DUT,ĐH Bách Khoa Đà Nẵng,7480101,Công nghệ Thông tin,D01,2023,21.0,100,THPT
+DUT,ĐH Bách Khoa Đà Nẵng,7520201,Kỹ thuật Điện tử - Viễn thông,A00,2023,20.5,100,THPT
+DUT,ĐH Bách Khoa Đà Nẵng,7520201,Kỹ thuật Điện tử - Viễn thông,A01,2023,20.5,80,THPT
+CTU,ĐH Cần Thơ,7480101,Công nghệ Thông tin,A00,2023,18.0,60,THPT
+CTU,ĐH Cần Thơ,7480101,Công nghệ Thông tin,A01,2023,18.0,80,THPT
+CTU,ĐH Cần Thơ,7480101,Công nghệ Thông tin,D01,2023,18.0,150,THPT
+CTU,ĐH Cần Thơ,7340101,Quản trị Kinh doanh,A00,2023,17.5,100,THPT
+CTU,ĐH Cần Thơ,7340101,Quản trị Kinh doanh,D01,2023,17.5,100,THPT
+CTU,ĐH Cần Thơ,7340101,Quản trị Kinh doanh,D07,2023,17.5,100,THPT
