@@ -1,0 +1,51 @@
+=== THÔNG TIN CÁC TRƯỜNG ĐẠI HỌC ===
+
+[ĐH Bách Khoa Hà Nội - Mã: BKA]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 22,000,000 VNĐ/năm
+
+[ĐH Công nghệ - ĐHQGHN - Mã: UET]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 20,000,000 VNĐ/năm
+
+[ĐH Kinh tế Quốc dân - Mã: NEU]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 16,000,000 VNĐ/năm
+
+[ĐH Bưu chính Viễn thông - Mã: PTIT]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 14,000,000 VNĐ/năm
+
+[ĐH Khoa học Tự nhiên HN - Mã: HUST]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 15,000,000 VNĐ/năm
+
+[ĐH Công nghệ Thông tin TP.HCM - Mã: UIT]
+Khu vực: TP.HCM
+Loại trường: Công lập
+Học phí: 22,000,000 VNĐ/năm
+
+[ĐH Ngoại thương - Mã: FTU]
+Khu vực: Hà Nội
+Loại trường: Công lập
+Học phí: 18,000,000 VNĐ/năm
+
+[ĐH RMIT Việt Nam - Mã: RMIT]
+Khu vực: TP.HCM
+Loại trường: Quốc tế
+Học phí: 280,000,000 VNĐ/năm
+
+[ĐH Bách Khoa Đà Nẵng - Mã: DUT]
+Khu vực: Đà Nẵng
+Loại trường: Công lập
+Học phí: 13,000,000 VNĐ/năm
+
+[ĐH Cần Thơ - Mã: CTU]
+Khu vực: Cần Thơ
+Loại trường: Công lập
+Học phí: 12,000,000 VNĐ/năm

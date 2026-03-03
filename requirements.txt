@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+joblib
+fastapi
+uvicorn
+pydantic
+sentence-transformers
+chromadb

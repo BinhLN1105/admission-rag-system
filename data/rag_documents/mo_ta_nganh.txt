@@ -1,0 +1,21 @@
+=== MÔ TẢ CÁC NGÀNH HỌC ===
+
+[Khoa học Máy tính - Mã: 7480201]
+Khoa học Máy tính đào tạo kỹ sư có nền tảng lý thuyết vững chắc về thuật toán, cấu trúc dữ liệu, trí tuệ nhân tạo và phát triển phần mềm. Cơ hội việc làm: Lập trình viên, Kỹ sư AI, Nhà khoa học dữ liệu, Nghiên cứu viên.
+Tổ hợp: A00, A01
+
+[Trí tuệ Nhân tạo - Mã: 7480107]
+Trí tuệ Nhân tạo là ngành mới, đào tạo chuyên sâu về Machine Learning, Deep Learning, Computer Vision, NLP. Cơ hội việc làm: AI Engineer, ML Engineer, Research Scientist tại các công ty công nghệ lớn.
+Tổ hợp: A00, A01
+
+[Công nghệ Thông tin - Mã: 7480101]
+Công nghệ Thông tin là ngành đa dạng nhất trong lĩnh vực CNTT, bao gồm lập trình, mạng, cơ sở dữ liệu, bảo mật. Cơ hội việc làm: Lập trình viên full-stack, Quản trị hệ thống, BA, PM.
+Tổ hợp: A00, A01, D01
+
+[Khoa học Dữ liệu - Mã: 7440112]
+Khoa học Dữ liệu kết hợp thống kê, lập trình và kinh doanh để phân tích dữ liệu lớn. Cơ hội việc làm: Data Analyst, Data Scientist, Business Intelligence.
+Tổ hợp: A00, A01
+
+[Quản trị Kinh doanh - Mã: 7340101]
+Quản trị Kinh doanh đào tạo kỹ năng quản lý, lãnh đạo, chiến lược kinh doanh. Cơ hội việc làm: Quản lý doanh nghiệp, Tư vấn kinh doanh, Entrepreneur.
+Tổ hợp: A00, D01, D07
