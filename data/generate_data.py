@@ -186,10 +186,15 @@ Nhóm ngành: {n['nhom']}
 
 mo_ta_chi_tiet = {
     "7480201": "Khoa học Máy tính đào tạo kỹ sư có nền tảng lý thuyết vững chắc về thuật toán, cấu trúc dữ liệu, trí tuệ nhân tạo và phát triển phần mềm. Cơ hội việc làm: Lập trình viên, Kỹ sư AI, Nhà khoa học dữ liệu, Nghiên cứu viên.",
+    "7480202": "Mạng máy tính và TT cung cấp kiến thức trọng tâm về nền tảng hạ tầng công nghệ, vận hành hệ thống mạng diện rộng, điện toán đám mây và an toàn thông tin cơ bản. Cơ hội việc làm: Kỹ sư thiết kế mạng, Chuyên viên quản trị hệ thống ISP.",
+    "7480101": "Công nghệ Thông tin là ngành đa dạng nhất trong lĩnh vực CNTT, bao gồm lập trình, mạng, cơ sở dữ liệu, bảo mật. Cơ hội việc làm: Lập trình viên full-stack, Quản trị hệ thống, PM.",
     "7480107": "Trí tuệ Nhân tạo là ngành mới, đào tạo chuyên sâu về Machine Learning, Deep Learning, Computer Vision, NLP. Cơ hội việc làm: AI Engineer, ML Engineer, Research Scientist tại các công ty công nghệ lớn.",
-    "7480101": "Công nghệ Thông tin là ngành đa dạng nhất trong lĩnh vực CNTT, bao gồm lập trình, mạng, cơ sở dữ liệu, bảo mật. Cơ hội việc làm: Lập trình viên full-stack, Quản trị hệ thống, BA, PM.",
-    "7440112": "Khoa học Dữ liệu kết hợp thống kê, lập trình và kinh doanh để phân tích dữ liệu lớn. Cơ hội việc làm: Data Analyst, Data Scientist, Business Intelligence.",
-    "7340101": "Quản trị Kinh doanh đào tạo kỹ năng quản lý, lãnh đạo, chiến lược kinh doanh. Cơ hội việc làm: Quản lý doanh nghiệp, Tư vấn kinh doanh, Entrepreneur.",
+    "7520201": "Kỹ thuật Điện tử - Viễn thông kết hợp giữa phần mềm và phần cứng, vi mạch, truyền tải tín hiệu quang, thiết kế mạch điện tử. Cơ hội việc làm: Kỹ sư vi mạch, Thiết kế phần cứng IoT, Chuyên gia viễn thông.",
+    "7340101": "Quản trị Kinh doanh đào tạo kỹ năng quản lý, lãnh đạo, chiến lược kinh doanh. Cơ hội việc làm: Quản lý doanh nghiệp, Tư vấn kinh doanh, Entrepreneur, Chuyên viên phòng ban nhân sự kinh doanh.",
+    "7340201": "Tài chính - Ngân hàng cung cấp nền tảng vững về kinh tế mô hình, đầu tư, tín dụng, chứng khoán và quản lý rủi ro tài chính. Cơ hội việc làm: Chuyên viên phân tích tài chính, nhân viên tín dụng, quản lý quỹ.",
+    "7220201": "Ngôn ngữ Anh đào tạo ngôn ngữ học, dịch thuật, giao tiếp thương mại, đáp ứng xu thế hội nhập toàn cầu hóa. Cơ hội việc làm: Phiên dịch viên, Biên dịch viên, Giảng viên khối ngoại ngữ, truyền thông quốc tế.",
+    "7440112": "Khoa học Dữ liệu kết hợp thống kê, lập trình và kinh doanh để xử lý lượng cực lớn Big Data. Cơ hội việc làm: Data Analyst, Data Scientist, Data Engineer, Chuyên viên phân tích doanh nghiệp.",
+    "7520110": "Kỹ thuật Máy tính học sâu về kiến trúc máy tính, nhúng, thiết kế chip, hệ điều hành. Kỹ sư là những người giỏi cả lõi C/C++ và điện tử. Cơ hội việc làm: Kỹ sư nhúng Embedded System, Hệ điều hành, Robotic.",
 }
 
 full_mo_ta = "=== MÔ TẢ CÁC NGÀNH HỌC ===\n"

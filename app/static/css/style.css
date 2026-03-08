@@ -63,6 +63,49 @@ textarea {
     transition: border-color 0.3s;
 }
 
+/* --- Custom Dropdown Styles --- */
+.custom-dropdown-container {
+    position: relative;
+}
+
+.custom-dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: -5px; /* overlap with input slightly */
+    border-top: none;
+}
+
+.dropdown-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover, .dropdown-item.active {
+    background-color: #f1f8ff;
+    color: #1a73e8;
+}
+
+.dropdown-item strong {
+    color: #1a73e8;
+    margin-right: 5px;
+}
+
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #1a73e8;
@@ -108,4 +151,16 @@ button:hover {
 #loading {
     color: #fbbc05;
     font-weight: 500;
+}
+
+.score-input label {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+.score-input input {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    text-align: center;
 }

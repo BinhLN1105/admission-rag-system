@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Tư Vấn Tuyển Sinh</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,48 @@
             <div class="form-card">
                 <div class="form-group">
                     <label>Điểm thi THPT Quốc Gia (đã tính theo tổ hợp):</label>
-                    <input type="number" id="diem_thi" step="0.01" min="0" max="30" placeholder="Ví dụ: 26.5">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="number" id="diem_thi" step="0.01" min="0" max="30" placeholder="Ví dụ: 26.5" style="flex: 1;">
+                        <button type="button" onclick="toggleCalculator()" style="width: auto; padding: 12px 15px; background: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 5px;">
+                            ⚙️ Tính tự động
+                        </button>
+                    </div>
+                </div>
+
+                <div id="calculator-section" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                    <h4 style="margin-bottom: 15px; color: #4a4a4a; font-size: 0.95rem;">Nhập điểm các môn (để trống môn không thi):</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div class="score-input"><label>Toán</label><input type="number" id="s_toan" step="0.25" min="0" max="10"></div>
+                        <div class="score-input"><label>Ngữ Văn</label><input type="number" id="s_van" step="0.25" min="0" max="10"></div>
+                        <div class="score-input"><label>Tiếng Anh</label><input type="number" id="s_anh" step="0.25" min="0" max="10"></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: stretch;">
+                        <!-- KHTN -->
+                        <div style="flex: 1; border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; background: #fff;">
+                            <strong style="display:block; margin-bottom: 8px; font-size: 0.85rem; color:#1a73e8;">Khoa học Tự nhiên</strong>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                                <div class="score-input"><label>Vật lý</label><input type="number" id="s_ly" step="0.25" min="0" max="10"></div>
+                                <div class="score-input"><label>Hóa học</label><input type="number" id="s_hoa" step="0.25" min="0" max="10"></div>
+                                <div class="score-input"><label>Sinh học</label><input type="number" id="s_sinh" step="0.25" min="0" max="10"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- KHXH -->
+                        <div style="flex: 1; border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; background: #fff;">
+                            <strong style="display:block; margin-bottom: 8px; font-size: 0.85rem; color:#34a853;">Khoa học Xã hội</strong>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                                <div class="score-input"><label>Lịch sử</label><input type="number" id="s_su" step="0.25" min="0" max="10"></div>
+                                <div class="score-input"><label>Địa lý</label><input type="number" id="s_dia" step="0.25" min="0" max="10"></div>
+                                <div class="score-input"><label>GDCD</label><input type="number" id="s_gdcd" step="0.25" min="0" max="10"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="calculateBestCombo()" style="background-color: #34a853; padding: 12px; font-size: 0.95rem;">
+                        Tính tổ hợp tối ưu nhất
+                    </button>
                 </div>
 
                 <div class="form-group">
@@ -34,8 +75,19 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Tổ hợp xét tuyển (Khối thi):</label>
+                    <select id="to_hop">
+                        <option value="A00">A00 (Toán, Vật lý, Hóa học)</option>
+                        <option value="A01">A01 (Toán, Vật lý, Tiếng Anh)</option>
+                        <option value="D01">D01 (Toán, Ngữ văn, Tiếng Anh)</option>
+                        <option value="D07">D07 (Toán, Hóa học, Tiếng Anh)</option>
+                    </select>
+                </div>
+
+                <div class="form-group custom-dropdown-container">
                     <label>Ngành ưu tiên / Mã ngành:</label>
-                    <input type="text" id="ma_nganh" placeholder="Ví dụ: 7480201">
+                    <input type="text" id="ma_nganh" autocomplete="off" placeholder="Chọn hoặc gõ tìm kiếm ngành/mã ngành (VD: 7480201)">
+                    <div id="majors_dropdown" class="custom-dropdown-list" style="display: none;"></div>
                 </div>
 
                 <div class="form-group">
@@ -54,6 +106,6 @@
         </main>
     </div>
     
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v=4"></script>
 </body>
 </html>

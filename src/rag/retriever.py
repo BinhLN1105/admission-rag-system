@@ -4,9 +4,10 @@ class Retriever:
     def __init__(self):
         self.store = VectorStore()
 
-    def retrieve(self, query: str, top_k: int = 8) -> str:
-        # Đôi khi mô hình lấy thiếu kết quả nếu top_k ban đầu nhỏ. Ta sẽ query lấy 15 kết quả, vì n_results giới hạn theo size của collection (=17).
-        results = self.store.search(query, top_k=15)
+    def retrieve(self, query: str, ma_nganh: str = "", top_k: int = 2) -> str:
+        # Tự động gộp ma_nganh vào query để search vector cho chuẩn
+        search_query = f"{query} {ma_nganh}".strip()
+        results = self.store.search(search_query, top_k=15)
         
         if not results['documents'] or not results['documents'][0]:
             return "Không có thông tin liên quan trong cơ sở dữ liệu."
@@ -14,7 +15,7 @@ class Retriever:
         retrieved_docs = results['documents'][0]
         
         # Simple Re-ranking bằng keyword matching
-        query_words = query.lower().split()
+        query_words = search_query.lower().split()
         
         scored_docs = []
         for doc in retrieved_docs:
@@ -24,7 +25,10 @@ class Retriever:
             if "bka" in query_words and "bka" in doc_lower: score += 10
             if "bách khoa" in query.lower() and "bách khoa" in doc_lower: score += 10
             if "uit" in query_words and "uit" in doc_lower: score += 10
-            if "7480107" in query_words and "7480107" in doc_lower: score += 10
+            
+            # Boost trực tiếp cho đúng mô tả của ngành
+            if ma_nganh and ma_nganh in doc_lower: 
+                score += 20
             
             for word in query_words:
                 if len(word) > 2 and word in doc_lower:
