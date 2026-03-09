@@ -1,0 +1,8 @@
+# Tạo môi trường ảo mới
+python -m venv venv
+
+# Kích hoạt môi trường
+.\venv\Scripts\activate
+
+# Cài đặt các thư viện cần thiết
+pip install requests beautifulsoup4 colorama pandas

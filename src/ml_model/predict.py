@@ -42,10 +42,10 @@ def predict_probability(
     rf, lr, scaler = _load_models()
 
     diem_cong        = KV_MAP.get(khu_vuc.upper(), 0.0)
-    diem_co_uu_tien  = round(diem_thi_sinh + diem_cong, 2)
-    trung_binh       = round((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3, 2)
-    xu_huong         = round(diem_chuan_2025 - diem_chuan_2024, 2)
-    chenh_lech       = round(diem_co_uu_tien - diem_chuan_2025, 2)
+    diem_co_uu_tien  = float(round(float(diem_thi_sinh + diem_cong), 2))
+    trung_binh       = float(round(float((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3), 2))
+    xu_huong         = float(round(float(diem_chuan_2025 - diem_chuan_2024), 2))
+    chenh_lech       = float(round(float(diem_co_uu_tien - diem_chuan_2025), 2))
 
     X = pd.DataFrame([{
         "diem_thi_sinh":   diem_thi_sinh,
@@ -81,7 +81,7 @@ def predict_probability(
         danh_gia = "Rất thấp — nên xem xét trường/ngành khác"
 
     return {
-        "xac_suat_do":      round(float(prob), 4),
+        "xac_suat_do":      float(round(float(prob), 4)),
         "phan_tram":        f"{prob*100:.1f}%",
         "danh_gia":         danh_gia,
         "chenh_lech":       chenh_lech,

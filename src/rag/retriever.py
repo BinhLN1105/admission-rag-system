@@ -20,7 +20,7 @@ class Retriever:
         scored_docs = []
         for doc in retrieved_docs:
             doc_lower = doc.lower()
-            score = 0
+            score: int = 0
             # CỘNG ĐIỂM NẶNG cho các từ khóa cốt lõi (Mã trường, Tên trường chính xác)
             if "bka" in query_words and "bka" in doc_lower: score += 10
             if "bách khoa" in query.lower() and "bách khoa" in doc_lower: score += 10
@@ -39,7 +39,7 @@ class Retriever:
         scored_docs.sort(key=lambda x: x[0], reverse=True)
         
         # Lấy top_k văn bản sau khi rerank
-        best_docs = [doc for score, doc in scored_docs[:top_k]]
+        best_docs = [doc for doc_score, doc in scored_docs[0:top_k]]
         
         context = "\n\n".join(best_docs)
         return context

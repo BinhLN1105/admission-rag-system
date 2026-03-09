@@ -8,3 +8,6 @@ uvicorn
 pydantic
 sentence-transformers
 chromadb
+requests
+beautifulsoup4
+colorama

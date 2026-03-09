@@ -95,7 +95,7 @@ class InferencePipeline:
             return f"⚠️ **Xin lỗi:** Hiện tại không có trường nào xét tuyển ngành mã **{ma_nganh}** bằng mức tổ hợp **{to_hop}**. Vui lòng thao tác lại với ngành khác hoặc khối thi khác nhé!"
             
         truong_list = df_nganh["ma_truong"].unique()
-        results = []
+        results: list[dict[str, str | float]] = []
         
         for ma_truong in truong_list:
             school_data = df_nganh[df_nganh["ma_truong"] == ma_truong]
@@ -156,10 +156,9 @@ if __name__ == "__main__":
     pipeline = InferencePipeline()
     ket_qua = pipeline.run(
         query="Khoa học máy tính Bách Khoa",
+        ma_nganh="IT1",
+        to_hop="A00",
         diem=27.5,
-        khu_vuc="KV2",
-        dc_2023=27.5,
-        dc_2024=28.0,
-        dc_2025=27.8
+        khu_vuc="KV2"
     )
     print(ket_qua)

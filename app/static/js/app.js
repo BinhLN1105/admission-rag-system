@@ -165,7 +165,8 @@ async function hoiDap() {
         
         loading.style.display = "none";
         resultContent.style.display = "block";
-        resultContent.innerText = data.ket_qua;
+        // Convert Markdown to HTML using marked.js
+        resultContent.innerHTML = marked.parse(data.ket_qua);
     } catch (error) {
         loading.style.display = "none";
         resultContent.style.display = "block";

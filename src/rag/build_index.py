@@ -12,7 +12,7 @@ def build_index():
     metadatas = []
     ids = []
     
-    idx = 0
+    idx: int = 0
     for filename in os.listdir(RAG_DOCS_DIR):
         if not filename.endswith(".txt"):
             continue

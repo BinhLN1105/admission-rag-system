@@ -36,7 +36,7 @@ def train():
     df = pd.read_csv(DATA_PATH)
     X  = df[FEATURE_COLS]
     y  = df[LABEL_COL]
-    print(f"   Tổng: {len(df)} mẫu | Đỗ: {y.sum()} | Rớt: {(y==0).sum()}")
+    print(f"   Tổng: {len(df)} mẫu | Đỗ: {int(y.sum())} | Rớt: {len(y[y==0])}")
 
     # 2. Train/test split
     X_train, X_test, y_train, y_test = train_test_split(

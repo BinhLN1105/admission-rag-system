@@ -45,9 +45,9 @@ def build_input_vector(
     diem_cong = KV_MAP.get(khu_vuc.upper(), 0.0)
     diem_co_uu_tien = diem_thi_sinh + diem_cong
 
-    trung_binh = round((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3, 2)
-    xu_huong   = round(diem_chuan_2025 - diem_chuan_2024, 2)
-    chenh_lech = round(diem_co_uu_tien - diem_chuan_2025, 2)
+    trung_binh = float(round(float((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3), 2))
+    xu_huong   = float(round(float(diem_chuan_2025 - diem_chuan_2024), 2))
+    chenh_lech = float(round(float(diem_co_uu_tien - diem_chuan_2025), 2))
 
     return pd.DataFrame([{
         "diem_thi_sinh":   diem_thi_sinh,

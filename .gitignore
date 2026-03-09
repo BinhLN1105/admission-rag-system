@@ -27,6 +27,7 @@ venv/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+notebooks/scrap/VNexpress/data/*.csv
 
 # VS Code
 .vscode/

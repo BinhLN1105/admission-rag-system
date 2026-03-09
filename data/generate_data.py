@@ -137,11 +137,11 @@ for _, row in pivot.iterrows():
         kv   = np.random.choice(list(KHU_VUC.keys()), p=[0.15,0.25,0.35,0.25])
         cong = KHU_VUC[kv]
 
-        diem_raw = round(np.random.normal(loc=dc_latest, scale=2.5), 2)
+        diem_raw = float(round(float(np.random.normal(loc=dc_latest, scale=2.5)), 2))
         diem_raw = max(0.0, min(30.0, diem_raw))
-        diem_co_uu_tien = round(diem_raw + cong, 2)
+        diem_co_uu_tien = float(round(float(diem_raw + cong), 2))
 
-        chenh_lech = round(diem_co_uu_tien - dc_latest, 2)
+        chenh_lech = float(round(float(diem_co_uu_tien - dc_latest), 2))
 
         # Xác suất đỗ dùng sigmoid (thực tế hơn hard threshold)
         prob = 1 / (1 + np.exp(-2.5 * chenh_lech))
@@ -197,7 +197,7 @@ mo_ta_chi_tiet = {
     "7520110": "Kỹ thuật Máy tính học sâu về kiến trúc máy tính, nhúng, thiết kế chip, hệ điều hành. Kỹ sư là những người giỏi cả lõi C/C++ và điện tử. Cơ hội việc làm: Kỹ sư nhúng Embedded System, Hệ điều hành, Robotic.",
 }
 
-full_mo_ta = "=== MÔ TẢ CÁC NGÀNH HỌC ===\n"
+full_mo_ta: str = "=== MÔ TẢ CÁC NGÀNH HỌC ===\n"
 for ma, mo in mo_ta_chi_tiet.items():
     nganh = next((n for n in NGANH if n["ma_nganh"] == ma), None)
     if nganh:
