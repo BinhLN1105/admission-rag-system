@@ -23,7 +23,9 @@ class InferencePipeline:
         context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, top_k=2)
 
         # Trích xuất mã trường từ context RAG (Phụ thuộc vào format "[Tên Trường - Mã: BKA]")
-        truong_matches = re.findall(r'- Mã:\s*([A-Z0-9]+)\]', context)
+        # Lọc bỏ các mã chứa toàn chữ số vì đó là mã ngành (ví dụ: 7480201)
+        raw_matches = re.findall(r'- Mã:\s*([A-Z0-9]+)\]', context)
+        truong_matches = [m for m in raw_matches if not m.isdigit()]
         
         if not truong_matches:
             return f"Theo thông tin tìm thấy:\n{context}\n\n⚠️ **Lưu ý:** Không nhận diện được bạn đang hỏi trường nào trong câu hỏi. Vui lòng ghi lại câu hỏi có tên trường rõ ràng (VD: Bách Khoa, BKA, Khoa học Tự nhiên...) hoặc để trống câu hỏi để AI tự động tìm trường cho bạn."
