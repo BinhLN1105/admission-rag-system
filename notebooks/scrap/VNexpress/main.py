@@ -11,6 +11,7 @@ colorama.init(autoreset=True)
 
 from scraper_utils import scrape_diem_chuan_api
 from scraper import run_scraper
+import preprocess_data
 
 def lay_thong_tin_truong(url):
     """Truy cập trang chính của trường để bóc tách Tên và Mã trường"""
@@ -110,6 +111,9 @@ def chay_thu_thap_va_xuat_csv():
             writer.writerows(danh_sach_dong)
             
         print(f"{Fore.GREEN}[+] Đã lưu thành công: {duong_dan_file} ({len(danh_sach_dong)} dòng)")
+
+    print(f"\n{Fore.YELLOW}{Style.BRIGHT}--- ĐANG XỬ LÝ DỮ LIỆU RAG VÀ ML ---")
+    preprocess_data.main()
 
 if __name__ == "__main__":
     chay_thu_thap_va_xuat_csv()

@@ -4,11 +4,26 @@ class Retriever:
     def __init__(self):
         self.store = VectorStore()
 
-    def retrieve(self, query: str, ma_nganh: str = "", top_k: int = 2) -> str:
+    def retrieve(self, query: str, ma_nganh: str = "", to_hop: str = "", ma_truong: str = "", top_k: int = 2) -> str:
         # Tự động gộp ma_nganh vào query để search vector cho chuẩn
-        search_query = f"{query} {ma_nganh}".strip()
-        results = self.store.search(search_query, top_k=15)
+        search_query = f"{query} {ma_nganh} {ma_truong} {to_hop}".strip()
         
+        # Bước 1: Thử tìm với bộ lọc ma_nganh, ma_truong, to_hop chặt trong metadata của ChromaDB
+        # Điều này đảm bảo RAG chỉ trả về document đúng ngành, trường, khối
+        results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong, to_hop=to_hop)
+        
+        # Bước 2: Nới lỏng to_hop (Nếu không tìm thấy)
+        if not results['documents'] or not results['documents'][0]:
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong)
+            
+        # Nới lỏng ma_truong
+        if not results['documents'] or not results['documents'][0]:
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh)
+            
+        # Nới lỏng hoàn toàn
+        if not results['documents'] or not results['documents'][0]:
+            results = self.store.search(search_query, top_k=15)
+            
         if not results['documents'] or not results['documents'][0]:
             return "Không có thông tin liên quan trong cơ sở dữ liệu."
             

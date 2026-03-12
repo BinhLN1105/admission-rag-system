@@ -23,10 +23,27 @@ class VectorStore:
             ids=ids
         )
 
-    def search(self, query: str, top_k: int = 3):
+    def search(self, query: str, top_k: int = 3, ma_nganh: str = "", ma_truong: str = "", to_hop: str = ""):
         query_embedding = self.embedder.embed_text(query)
+        
+        conditions = []
+        if ma_nganh:
+            conditions.append({"ma_nganh": {"$eq": ma_nganh}})
+        if ma_truong:
+            conditions.append({"ma_truong": {"$eq": ma_truong}})
+        if to_hop:
+            conditions.append({"ma_to_hop": {"$eq": to_hop}})
+            
+        if len(conditions) == 1:
+            where_filter = conditions[0]
+        elif len(conditions) > 1:
+            where_filter = {"$and": conditions}
+        else:
+            where_filter = None
+            
         results = self.collection.query(
             query_embeddings=[query_embedding],
-            n_results=top_k
+            n_results=top_k,
+            where=where_filter
         )
         return results

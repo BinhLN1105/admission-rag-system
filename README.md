@@ -1,70 +1,67 @@
-# Hệ Thống Tư Vấn Tuyển Sinh RAG + ML
+# Hệ Thống Tư Vấn Tuyển Sinh Thông Minh (RAG + ML)
 
-Dự án xây dựng hệ thống tư vấn tuyển sinh đại học thông minh, kết hợp giữa mô hình học máy (Machine Learning) để dự đoán xác suất trúng tuyển và hệ thống RAG (Retrieval-Augmented Generation) để cung cấp thông tin chi tiết về trường/ngành học.
+Dự án phát triển hệ thống hỗ trợ tư vấn tuyển sinh đại học, sử dụng sức mạnh của **Machine Learning** để dự đoán khả năng trúng tuyển và **RAG (Retrieval-Augmented Generation)** để cung cấp thông tin chi tiết về các trường và ngành học. Dữ liệu được thu thập thực tế từ VnExpress.
 
-## Tổng quan Kiến Trúc
+---
 
-Dự án được triển khai theo 5 giai đoạn:
-1. **Dữ liệu & Cấu trúc**: Khởi tạo thư mục và dữ liệu giả lập (Synthetic Data).
-2. **Machine Learning Model**: Huấn luyện Random Forest và Logistic Regression để dự đoán xác suất đỗ đại học dựa trên lịch sử điểm chuẩn. Sử dụng Ensemble Learning tính trung bình xác suất.
-3. **RAG System**: Sử dụng `sentence-transformers` và `ChromaDB` để nhúng (embed) và lưu trữ thông tin về các trường đại học, ngành học. Cải tiến Retrieval bằng thuật toán kết hợp Vector Similarity và Keyword Matching (Hybrid Search).
-4. **Pipeline Kết nối**: Tổng hợp kết quả từ ML và RAG để tạo ra prompt chất lượng cho LLM (Large Language Model) sinh câu trả lời tự nhiên.
-5. **Web Application**: Giao diện Web xây dựng bằng FastAPI, HTML/CSS/JS thuần tư vấn phản hồi trực tiếp cho người dùng.
+## 🚀 Các Tính Năng Chính
+- **Dự đoán trúng tuyển**: Phân tích lịch sử điểm chuẩn phối hợp với tổ hợp môn và khu vực ưu tiên để tính toán xác suất.
+- **Tư vấn thông minh (RAG)**: Tìm kiếm và trả lời các câu hỏi về mô tả ngành nghề, học phí, và thông tin trường dựa trên cơ sở dữ liệu văn bản.
+- **Dữ liệu thực tế**: Hệ thống sử dụng dữ liệu điểm chuẩn giai đoạn 2023-2025 được thu thập từ nguồn VnExpress.
+- **Giao diện thân thiện**: Web app xây dựng trên FastAPI với giao diện hiện đại, phản hồi nhanh.
 
-## Cấu trúc thư mục
+## 📂 Cấu Trúc Dự Án
 
 ```text
 Project_AI/
-├── app/                  # Web app (FastAPI)
-│   ├── static/           # HTML, CSS, JS
-│   ├── main.py           # Khởi chạy server
-│   ├── routes.py         # API Endpoints
-│   └── schema.py         # Pydantic schemas
-├── data/                 # Dữ liệu
-│   ├── raw/              # Dữ liệu điểm chuẩn các năm (.csv)
-│   ├── processed/        # Dữ liệu sau feature engineering
-│   ├── rag_documents/    # Văn bản dành cho RAG (.txt)
-│   └── generate_data.py  # Script tạo dữ liệu giả lập
-├── models/               # Nơi lưu Models
-│   ├── random_forest.pkl
-│   ├── logistic_regression.pkl
-│   ├── scaler.pkl
-│   └── vector_db/        # Database ChromaDB
-├── notebooks/            # Jupyter notebooks thử nghiệm
-├── src/                  # Mã nguồn chính
-│   ├── data_processing/  # Tiền xử lý dữ liệu
-│   ├── ml_model/         # Script Train, Predict, Evaluate ML
-│   ├── rag/              # Script Embedder, Retriever, VectorStore
-│   └── pipeline/         # Kết nối RAG và ML
-├── .env                  # Biến môi trường
-├── requirements.txt      # Thư viện Python
-└── README.md             # Tệp hướng dẫn
+├── app/                  # Ứng dụng Web (FastAPI)
+│   ├── main.py           # Entry point của ứng dụng
+│   ├── routes.py         # Xử lý các luồng API
+│   └── static/           # Giao diện người dùng (HTML/CSS/JS)
+├── data/                 # Quản lý dữ liệu
+│   ├── raw/              # Dữ liệu điểm chuẩn gốc (Crawl từ VnExpress)
+│   ├── processed/        # Dữ liệu đã qua làm sạch và xử lý đặc trưng
+│   └── rag_documents/    # Văn bản tri thức cho hệ thống RAG
+├── models/               # Lưu trữ các Model đã huấn luyện (RF, Logistic)
+├── notebooks/            # Notebooks nghiên cứu, crawl dữ liệu và thử nghiệm
+├── src/                  # Mã nguồn xử lý cốt lõi
+│   ├── data_processing/  # Tiền xử lý và Feature Engineering
+│   ├── ml_model/         # Huấn luyện và dự đoán Machine Learning
+│   ├── rag/              # Xây dựng Index và truy vấn Vector DB
+│   └── pipeline/         # Kết nối ML và RAG
+└── requirements.txt      # Các thư viện cần thiết
 ```
 
-## Cài đặt & Khởi chạy
+## 🛠️ Hướng Dẫn Cài Đặt
 
-**Bước 1: Cài đặt thư viện**
+**1. Cài đặt môi trường**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Bước 2: Khởi tạo Dữ liệu & Huấn luyện Model**
-Chạy lệnh sau để tạo dummy data (hoặc load data thật), huấn luyện ML và Index văn bản cho RAG:
+**2. Tiền xử lý dữ liệu & Huấn luyện**
+Hệ thống cần xử lý dữ liệu thô và xây dựng chỉ mục vector trước khi hoạt động:
 ```bash
-python data/generate_data.py
+# Gộp dữ liệu và tạo đặc trưng
+python src/data_processing/merge_data.py
+# Huấn luyện mô hình ML
 python src/ml_model/train.py
+# Xây dựng cơ sở dữ liệu vector
 python src/rag/build_index.py
 ```
 
-**Bước 3: Khởi chạy Web Server**
+**3. Khởi chạy ứng dụng**
 ```bash
 python app/main.py
 ```
-*(Hoặc chạy lệnh `uvicorn app.main:app --reload`)*
+Truy cập: `http://localhost:8000`
 
-Truy cập địa chỉ `http://localhost:8000` trên trình duyệt để sử dụng hệ thống!
+## 📊 Quy Trình Xử Lý
+1. **Dữ liệu**: Crawl dữ liệu từ VnExpress -> Lưu vào `raw/`.
+2. **Xử lý**: Chuẩn hóa mã trường/ngành -> Feature Engineering (xu hướng điểm, biến động) -> Lưu vào `processed/`.
+3. **ML Pipeline**: Huấn luyện Ensemble Model (Random Forest + Logistic Regression).
+4. **RAG Pipeline**: Nhúng văn bản bằng `sentence-transformers` -> Lưu vào `ChromaDB`.
+5. **Inference**: Nhận input -> ML dự đoán % -> RAG tìm thông tin bổ trợ -> LLM tổng hợp câu trả lời.
 
-## Nâng cấp tương lai
-- Kết nối pipeline với API thật của OpenAI (`gpt-4`) hoặc Google Gemini để lấy đoạn sinh văn bản tự nhiên thay vì trả về Prompt mẫu.
-- Thay thế Synthetic Data bằng dữ liệu thật được Crawl từ các trang điểm chuẩn.
-- Tinh chỉnh RAG (BGE-M3 / PhoBERT) để embedding tiếng Việt chuẩn xác hơn.
+---
+*Dự án đang trong quá trình hoàn thiện và nâng cấp các thuật toán nhúng tiếng Việt.*

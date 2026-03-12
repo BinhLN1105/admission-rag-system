@@ -3,7 +3,8 @@ let allMajors = []; // Lưu trữ biến toàn cục
 // Load danh sách ngành khi trang vừa hiển thị
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch("/api/majors");
+        // Thêm tham số v để phá cache của trình duyệt khi load mới dữ liệu
+        const response = await fetch("/api/majors?v=" + new Date().getTime());
         const data = await response.json();
         allMajors = data.majors;
         renderDropdown(allMajors);

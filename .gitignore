@@ -23,6 +23,7 @@ wheels/
 
 # Virtual Environment
 venv/
+.venv/
 .env
 
 # Jupyter Notebook
@@ -36,19 +37,33 @@ notebooks/scrap/VNexpress/data/*.csv
 .idea/
 
 # Machine Learning / RAG Models & Data
-# Note: In a real project, you might want to version control small datasets, 
-# but definitely ignore large models and vector DBs.
 models/*.pkl
 models/vector_db/
 !models/.gitkeep
 
-# Ignore data folder contents but keep the folders themselves
-# data/raw/*
-# !data/raw/.gitkeep
-# data/processed/*
-# !data/processed/.gitkeep
-# data/rag_documents/*
-# !data/rag_documents/.gitkeep
+# ChromaDB vector store
+chroma_db/
+
+# Generated / Processed data (can be regenerated from raw data via preprocess_data.py)
+data/processed/
+data/ml_processed_data.csv
+data/rag_processed_data.json
+data/tmp_*.json
+data/tmp_*.csv
+
+# Keep raw data & folder structure
+!data/raw/
+!data/.gitkeep
 
 # macOS
 .DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# HuggingFace cache
+.cache/
+
+# Logs
+*.log
