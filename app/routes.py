@@ -46,6 +46,9 @@ async def get_majors():
         unique_majors = unique_majors.fillna('')
         unique_majors = unique_majors[unique_majors['ten_nganh'].str.strip() != '']
         
+        # Loại bỏ các tên ngành trùng lặp, giữ lại mã ngành phổ biến nhất
+        unique_majors = unique_majors.drop_duplicates(subset=['ten_nganh'], keep='first')
+        
         # Sắp xếp theo tên ngành cho dễ tìm
         unique_majors = unique_majors.sort_values(by="ten_nganh").to_dict('records')
         return {"majors": unique_majors}

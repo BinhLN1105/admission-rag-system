@@ -46,8 +46,8 @@ chroma_db/
 
 # Generated / Processed data (can be regenerated from raw data via preprocess_data.py)
 data/processed/
-data/ml_processed_data.csv
-data/rag_processed_data.json
+# data/ml_processed_data.csv
+# data/rag_processed_data.json
 data/tmp_*.json
 data/tmp_*.csv
 

@@ -8,21 +8,24 @@ class Retriever:
         # Tự động gộp ma_nganh vào query để search vector cho chuẩn
         search_query = f"{query} {ma_nganh} {ma_truong} {to_hop}".strip()
         
-        # Bước 1: Thử tìm với bộ lọc ma_nganh, ma_truong, to_hop chặt trong metadata của ChromaDB
-        # Điều này đảm bảo RAG chỉ trả về document đúng ngành, trường, khối
-        results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong, to_hop=to_hop)
-        
-        # Bước 2: Nới lỏng to_hop (Nếu không tìm thấy)
-        if not results['documents'] or not results['documents'][0]:
-            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong)
+        if ma_truong:
+            # 1. Toàn bộ filter (Nganh + Truong + ToHop)
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong, to_hop=to_hop)
             
-        # Nới lỏng ma_truong
-        if not results['documents'] or not results['documents'][0]:
-            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh)
-            
-        # Nới lỏng hoàn toàn
-        if not results['documents'] or not results['documents'][0]:
-            results = self.store.search(search_query, top_k=15)
+            # 2. Nới lỏng to_hop (Giữ Truong + Nganh)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong)
+                
+            # 3. Nới lỏng ma_nganh (GIỮ Truong) - Để lấy thông tin chung về trường
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_truong=ma_truong)
+        else:
+            # Nếu không có ma_truong -> Tìm theo ngành (Global)
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, to_hop=to_hop)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15)
             
         if not results['documents'] or not results['documents'][0]:
             return "Không có thông tin liên quan trong cơ sở dữ liệu."

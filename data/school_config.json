@@ -1,0 +1,41 @@
+{
+    "abbreviations": {
+        "tphcm": "thành phố hồ chí minh",
+        "hcm": "hồ chí minh",
+        "hn": "hà nội",
+        "đn": "đà nẵng",
+        "ct": "cần thơ",
+        "bk": "bách khoa",
+        "spkt": "sư phạm kỹ thuật",
+        "khtn": "khoa học tự nhiên",
+        "ussh": "khoa học xã hội và nhân văn",
+        "uel": "kinh tế luật",
+        "uit": "công nghệ thông tin",
+        "neuy": "kinh tế quốc dân",
+        "ftu": "ngoại thương",
+        "uth": "giao thông vận tải thành phố hồ chí minh"
+    },
+    "token_weights": {
+        "bách": 2.0,
+        "khoa": 2.0,
+        "đà": 2.0,
+        "nẵng": 2.0,
+        "cần": 2.0,
+        "thơ": 2.0,
+        "sư": 1.5,
+        "phạm": 1.5,
+        "kỹ": 1.5,
+        "thuật": 1.5,
+        "ngân": 2.0,
+        "hàng": 2.0,
+        "ngoại": 1.8,
+        "thương": 1.8,
+        "y": 2.0,
+        "dược": 2.0,
+        "công": 0.8,
+        "nghệ": 0.8,
+        "quốc": 0.5,
+        "gia": 0.5
+    },
+    "noise_pattern": "(?i)(?:^(?:đại học|trường|đh|phân hiệu|viện)\\s+|(?:\\s+của)?\\s+(?:tp\\.?\\s?hcm|hà nội|hồ chí minh|đà nẵng|cần thơ)$)"
+}
