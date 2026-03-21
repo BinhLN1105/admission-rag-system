@@ -119,7 +119,10 @@ class InferencePipeline:
         return best_ma if best_score > 0.4 else ""
 
     def run(self, query: str, ma_nganh: str, to_hop: str, diem: float, khu_vuc: str) -> str:
-        if not query or len(query.strip()) < 5:
+        if diem > 31:
+            return "Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia). Điểm bạn nhập vượt quá 30 điểm nên chúng tôi rất xin lỗi vì sự bất tiện này. Bạn hãy sử dụng tính năng tính toán điểm tự động để có thể đưa ra kết quả chính xác nhất."
+            
+        if not query or len(query.strip()) < 2:
             return self._auto_recommend_top_3(ma_nganh, to_hop, diem, khu_vuc)
 
         # Bước 1: Trích xuất mã trường từ query
@@ -200,6 +203,10 @@ class InferencePipeline:
         if pd.isna(dc_2024): dc_2024 = dc_2025 if not pd.isna(dc_2025) else 25.0
         if pd.isna(dc_2025): dc_2025 = dc_2024 if not pd.isna(dc_2024) else 25.0
 
+        max_dc = max([dc_2023, dc_2024, dc_2025])
+        if diem <= 31 and max_dc > 35:
+            return f"Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia) mà trường **{ma_truong}** với mã ngành **{ma_nganh}** mà bạn tìm kiếm trong các năm gần đây được xét tuyển trên thang điểm riêng (có thể là điểm hệ số 40, ĐGNL 100, 1200...) nên chúng tôi rất xin lỗi vì sự bất tiện này.\n\nThông tin tham khảo từ hệ thống:\n{context}"
+
         # Bước 4: ML Dự đoán
         ml_res = predict_probability(
             diem_thi_sinh=diem,
@@ -258,7 +265,7 @@ class InferencePipeline:
             results.append({
                 "ten_truong": ten_truong,
                 "ma_truong": ma_truong,
-                "prob": ml_res["phan_tram_so"],
+                "prob": ml_res["xac_suat_do"],
                 "phan_tram": ml_res["phan_tram"],
                 "danh_gia": ml_res["danh_gia"]
             })
