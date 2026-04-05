@@ -1,0 +1,299 @@
+﻿ma_to_hop,ten_to_hop,mon_1,mon_2,mon_3
+A00,Khối A,Toán,Vật lí,Hóa học
+A01,Khối A1,Toán,Vật lí,Tiếng Anh
+A02,Khối A2,Toán,Vật lí,Sinh học
+A03,Khối A3,Toán,Vật lí,Lịch sử
+A04,Khối A4,Toán,Vật lí,Địa lí
+A05,Khối A5,Toán,Hóa học,Lịch sử
+A06,Khối A6,Toán,Hóa học,Địa lí
+A07,Khối A7,Toán,Lịch sử,Địa lí
+A08,Khối A8,Toán,Lịch sử,GDKTPL
+A09,Khối A9,Toán,Địa lí,GDKTPL
+A0C,Khối A0C,Toán,Vật lí,Công nghệ
+A0T,Khối A0T,Toán,Vật lí,Tin học
+A10,Khối A10,Toán,Vật lí,GDKTPL
+A11,Khối A11,Toán,Hóa học,GDKTPL
+A12,Khối A12,Toán,KHTN,Lịch sử
+A13,Khối A13,Toán,KHTN,Địa lí
+A14,Khối A14,Toán,KHTN,GDCD
+A15,Khối A15,Toán,KHTN,GDKTPL
+A16,Khối A16,Toán,KHTN,Ngữ văn
+A17,Khối A17,Toán,KHXH,Vật lí
+A18,Khối A18,Toán,KHXH,Hóa học
+A19,Khối A19,Toán,KHXH,Sinh học
+AH1,Khối AH1,Toán,Địa lí,Tiếng Hàn
+AH2,Khối AH2,Toán,Hóa học,Tiếng Hàn
+AH3,Khối AH3,Toán,Vật lí,Tiếng Hàn
+AH4,Khối AH4,Toán,Sinh học,Tiếng Hàn
+AH5,Khối AH5,0,0,0
+AH6,Khối AH6,0,0,0
+AH7,Khối AH7,0,0,0
+AH8,Khối AH8,0,0,0
+ALL,Khối ALL,0,0,0
+AU,Khối AU,0,0,0
+B00,Khối B,Toán,Hóa học,Sinh học
+B01,Khối B1,Toán,Lịch sử,Sinh học
+B02,Khối B2,Toán,Sinh học,Địa lí
+B03,Khối B3,Toán,Sinh học,Ngữ văn
+B04,Khối B4,Toán,Sinh học,GDKTPL
+B05,Khối B5,Toán,Sinh học,KHXH
+B08,Khối B8,Toán,Sinh học,Tiếng Anh
+BO0,Khối BO0,0,0,0
+BO3,Khối BO3,0,0,0
+C00,Khối C,Ngữ văn,Lịch sử,Địa lí
+C01,Khối C1,Ngữ văn,Toán,Vật lí
+C02,Khối C2,Ngữ văn,Toán,Hóa học
+C03,Khối C3,Ngữ văn,Toán,Lịch sử
+C04,Khối C4,Ngữ văn,Toán,Địa lí
+C05,Khối C5,Ngữ văn,Vật lí,Hóa học
+C06,Khối C6,Ngữ văn,Vật lí,Sinh học
+C07,Khối C7,Ngữ văn,Lịch sử,Vật lí
+C08,Khối C8,Ngữ văn,Hóa học,Sinh học
+C09,Khối C9,Ngữ văn,Địa lí,Vật lí
+C0G,Khối C0G,Ngữ văn,Địa lí,Kinh tế & PL
+C10,Khối C10,Ngữ văn,Lịch sử,Hóa học
+C11,Khối C11,Ngữ văn,Địa lí,Hóa học
+C12,Khối C12,Ngữ văn,Lịch sử,Sinh học
+C13,Khối C13,Ngữ văn,Sinh học,Địa lí
+C14,Khối C14,Ngữ văn,Toán,GDKTPL
+C15,Khối C15,Ngữ văn,Toán,KHXH
+C16,Khối C16,Ngữ văn,Vật lí,GDKTPL
+C17,Khối C17,Ngữ văn,Hóa học,GDKTPL
+C18,Khối C18,Ngữ văn,Lịch sử,GDCD
+C19,Khối C19,Ngữ văn,Lịch sử,GDKTPL
+C20,Khối C20,Ngữ văn,Địa lí,GDKTPL
+C21,Khối C21,Ngữ văn,Địa lí,GDCD
+C22,Khối C22,Ngữ văn,Toán,GDCD
+C23,Khối C23,Ngữ văn,Toán,Địa lí
+C24,Khối C24,Ngữ văn,Toán,Lịch sử
+C25,Khối C25,Ngữ văn,Toán,KHTN
+C26,Khối C26,Ngữ văn,Toán,KHXH
+COI,Khối COI,0,0,0
+D00,Khối D,Toán,Ngữ văn,Tiếng Anh
+D01,Khối D1,Ngữ văn,Toán,Tiếng Anh
+D02,Khối D2,Ngữ văn,Toán,Tiếng Nga
+D03,Khối D3,Ngữ văn,Toán,Tiếng Pháp
+D04,Khối D4,Ngữ văn,Toán,Tiếng Trung
+D05,Khối D5,Ngữ văn,Toán,Tiếng Đức
+D06,Khối D6,Ngữ văn,Toán,Tiếng Nhật
+D07,Khối D7,Toán,Hóa học,Tiếng Anh
+D08,Khối D8,Toán,Sinh học,Tiếng Anh
+D09,Khối D9,Toán,Lịch sử,Tiếng Anh
+D10,Khối D10,Toán,Địa lí,Tiếng Anh
+D11,Khối D11,Ngữ văn,Vật lí,Tiếng Anh
+D12,Khối D12,Ngữ văn,Hóa học,Tiếng Anh
+D13,Khối D13,Ngữ văn,Sinh học,Tiếng Anh
+D14,Khối D14,Ngữ văn,Lịch sử,Tiếng Anh
+D145,Khối D145,Ngữ văn,KHXH,Tiếng Anh
+D147,Khối D147,Toán,KHXH,Tiếng Anh
+D15,Khối D15,Ngữ văn,Địa lí,Tiếng Anh
+D17,Khối D17,Toán,Ngữ văn,Địa lí
+D18,Khối D18,Toán,Ngữ văn,GDCD
+D19,Khối D19,Toán,Ngữ văn,Lịch sử
+D20,Khối D20,Toán,Địa lí,Tiếng Trung
+D21,Khối D21,Toán,Hóa học,Tiếng Đức
+D22,Khối D22,Toán,Hóa học,Tiếng Nga
+D23,Khối D23,Toán,Hóa học,Tiếng Nhật
+D24,Khối D24,Toán,Hóa học,Tiếng Pháp
+D25,Khối D25,Toán,Hóa học,Tiếng Trung
+D26,Khối D26,Toán,Vật lí,Tiếng Đức
+D27,Khối D27,Toán,Vật lí,Tiếng Nga
+D28,Khối D28,Toán,Vật lí,Tiếng Nhật
+D29,Khối D29,Toán,Vật lí,Tiếng Pháp
+D30,Khối D30,Toán,Vật lí,Tiếng Trung
+D31,Khối D31,Toán,Sinh học,Tiếng Đức
+D32,Khối D32,Toán,Sinh học,Tiếng Nga
+D33,Khối D33,Toán,Sinh học,Tiếng Nhật
+D34,Khối D34,Toán,Sinh học,Tiếng Pháp
+D35,Khối D35,Toán,Sinh học,Tiếng Trung
+D36,Khối D36,Toán,Lịch sử,Tiếng Đức
+D37,Khối D37,Toán,Lịch sử,Tiếng Nga
+D38,Khối D38,Toán,Lịch sử,Tiếng Nhật
+D39,Khối D39,Ngữ văn,Địa lí,Tiếng Đức
+D40,Khối D40,Toán,Lịch sử,Tiếng Trung
+D41,Khối D41,Ngữ văn,Địa lí,Tiếng Anh
+D42,Khối D42,Ngữ văn,Địa lí,Tiếng Nga
+D43,Khối D43,Ngữ văn,Địa lí,Tiếng Nhật
+D44,Khối D44,Ngữ văn,Địa lí,Tiếng Pháp
+D45,Khối D45,Ngữ văn,Địa lí,Tiếng Trung
+D48,Khối D48,Toán,Ngữ văn,Tiếng Nhật
+D50,Khối D50,Toán,Ngữ văn,Tiếng Trung
+D53,Khối D53,Toán,Ngữ văn,Tiếng Hàn
+D54,Khối D54,Toán,Ngữ văn,Tiếng Pháp
+D55,Khối D55,Ngữ văn,Vật lí,Tiếng Trung
+D58,Khối D58,Toán,Ngữ văn,Tiếng Nga
+D60,Khối D60,Toán,Ngữ văn,Tiếng Đức
+D61,Khối D61,Ngữ văn,Lịch sử,Tiếng Đức
+D62,Khối D62,Ngữ văn,Lịch sử,Tiếng Nga
+D63,Khối D63,Ngữ văn,Lịch sử,Tiếng Nhật
+D64,Khối D64,Ngữ văn,Lịch sử,Tiếng Pháp
+D65,Khối D65,Ngữ văn,Lịch sử,Tiếng Trung
+D66,Khối D66,Ngữ văn,GDKTPL,Tiếng Anh
+D67,Khối D67,Ngữ văn,GDKTPL,Tiếng Đức
+D68,Khối D68,Ngữ văn,GDKTPL,Tiếng Nga
+D69,Khối D69,Văn,GDKTPL,Tiếng Nhật
+D70,Khối D70,Ngữ văn,GDKTPL,Tiếng Pháp
+D71,Khối D71,Ngữ văn,GDKTPL,Tiếng Trung
+D72,Khối D72,Ngữ văn,KHTN,Tiếng Anh
+D75,Khối D75,Ngữ văn,KHXH,Tiếng Anh
+D77,Khối D77,Ngữ văn,KHXH,Tiếng Trung
+D78,Khối D78,Ngữ văn,KHXH,Tiếng Nhật
+D81,Khối D81,Ngữ văn,KHXH,Tiếng Anh
+D83,Khối D83,Ngữ văn,KHXH,Tiếng Pháp
+D84,Khối D84,Toán,Tiếng Anh,GDKTPL
+D86,Khối D86,Toán,GDKTPL,Tiếng Nga
+D87,Khối D87,Toán,GDKTPL,Tiếng Pháp
+D88,Khối D88,Toán,GDKTPL,Tiếng Nhật
+D89,Khối D89,Toán,Ngữ văn,Tiếng Nhật
+D90,Khối D90,Toán,KHTN,Tiếng Anh
+D91,Khối D91,Toán,KHXH,Tiếng Anh
+D96,Khối D96,Toán,KHXH,Tiếng Trung
+D97,Khối D97,Toán,KHXH,Tiếng Pháp
+D98,Khối D98,Toán,KHXH,Tiếng Nga
+DD2,Khối DD2,Ngữ văn,Toán,Tiếng Hàn
+DH1,Khối DH1,Ngữ văn,Địa lí,Tiếng Hàn
+DH3,Khối DH3,0,0,0
+DH5,Khối DH5,Ngữ văn,Lịch sử,Tiếng Hàn
+DH6,Khối DH6,0,0,0
+H00,Khối H,Ngữ văn,Vẽ,Vẽ
+H01,Khối H1,Toán,Ngữ văn,Vẽ
+H02,Khối H2,Toán,Vẽ,Vẽ
+H03,Khối H3,Toán,KHTN,Vẽ
+H04,Khối H4,Toán,Tiếng Anh,Vẽ
+H05,Khối H5,Ngữ văn,KHXH,Vẽ
+H06,Khối H6,Ngữ văn,Tiếng Anh,Vẽ
+H07,Khối H7,Toán,Hình họa,Trang trí
+H08,Khối H8,Ngữ văn,Lịch sử,Vẽ
+H09,Khối H9,Toán,Địa lí,Vẽ
+H10,Khối H10,Toán,GDCD,Vẽ
+H11,Khối H11,Ngữ văn,GDCD,Vẽ
+K01,Khối K1,Toán,Tiếng Anh,Tin học
+M00,Khối M,Ngữ văn,Toán,Năng khiếu
+M01,Khối M1,Ngữ văn,Lịch sử,Năng khiếu
+M02,Khối M2,Toán,NK1,NK2
+M03,Khối M3,Ngữ văn,NK1,NK2
+M04,Khối M4,Toán,Đọc,Hát
+M05,Khối M5,Ngữ văn,Đọc,Hát
+M06,Khối M6,Toán,Vẽ,Hát
+M07,Khối M7,Ngữ văn,Vẽ,Hát
+M08,Khối M8,Ngữ văn,NK,Hát
+M09,Khối M9,Toán,NK,Hát
+M10,Khối M10,Toán,NK,Đọc
+M11,Khối M11,Ngữ văn,NK,Đọc
+M26,Khối M26,0,0,0
+M27,Khối M27,0,0,0
+M28,Khối M28,0,0,0
+M29,Khối M29,0,0,0
+M30,Khối M30,0,0,0
+N00,Khối N,Ngữ văn,Âm nhạc,NK
+N01,Khối N1,Ngữ văn,Hát,Nhạc cụ
+N02,Khối N2,Ngữ văn,Xướng âm,Hát
+N03,Khối N3,Ngữ văn,Ghi âm,Hát
+N04,Khối N4,Ngữ văn,Nhạc cụ,Hát
+N05,Khối N5,Ngữ văn,Xướng âm,Hát
+N06,Khối N6,Ngữ văn,Nhạc lí,Hát
+N07,Khối N7,Ngữ văn,Piano,Hát
+R01,Khối R1,Ngữ văn,Lịch sử,NK
+R02,Khối R2,Ngữ văn,Địa lí,NK
+R03,Khối R3,Ngữ văn,Tiếng Anh,NK
+R04,Khối R4,Ngữ văn,GDCD,NK
+S00,Khối S,Ngữ văn,NK SKĐA 1,NK SKĐA 2
+T00,Khối T,Toán,Sinh học,Năng khiếu
+T01,Khối T1,Toán,Ngữ văn,Năng khiếu
+T02,Khối T2,Ngữ văn,Sinh học,Năng khiếu
+T03,Khối T3,Ngữ văn,Địa lí,Năng khiếu
+T04,Khối T4,Toán,Vật lí,Năng khiếu
+T05,Khối T5,Ngữ văn,GDCD,Năng khiếu
+T06,Khối T6,Toán,Địa lí,Năng khiếu
+T07,Khối T7,Toán,Hóa học,Năng khiếu
+T08,Khối T8,Sinh học,Hóa học,Năng khiếu
+T09,Khối T9,Toán,Lịch sử,Năng khiếu
+T10,Khối T10,Toán,GDCD,Năng khiếu
+T11,Khối T11,Ngữ văn,Vật lí,Năng khiếu
+T12,Khối T12,Ngữ văn,Hóa học,Năng khiếu
+TH9,Khối TH9,Ngữ văn,Tiếng Anh,Tin học
+V00,Khối V,Toán,Vật lí,Vẽ
+V01,Khối V1,Toán,Ngữ văn,Vẽ
+V02,Khối V2,Toán,Tiếng Anh,Vẽ
+V03,Khối V3,Toán,Hóa học,Vẽ
+V04,Khối V4,Toán,Sinh học,Vẽ
+V05,Khối V5,Ngữ văn,Vật lí,Vẽ
+V06,Khối V6,Toán,Địa lí,Vẽ
+V07,Khối V7,Toán,Tiếng Đức,Vẽ
+V08,Khối V8,Toán,Tiếng Nga,Vẽ
+V09,Khối V9,Toán,Tiếng Nhật,Vẽ
+V10,Khối V10,Toán,Tiếng Trung,Vẽ
+V11,Khối V11,Toán,Tiếng Pháp,Vẽ
+X01,Khối X1,Ngữ văn,Toán,GDKTPL
+X02,Khối X2,Toán,Ngữ văn,Tin học
+X03,Khối X3,Toán,Ngữ văn,Công nghệ công nghiệp
+X04,Khối X4,Toán,Ngữ văn,Công nghệ nông nghiệp
+X05,Khối X5,Toán,Vật lí,GDKTPL
+X06,Khối X6,Toán,Vật lí,Tin học
+X07,Khối X7,Toán,Vật lí,Công nghệ công nghiệp
+X08,Khối X8,Toán,Vật lí,Công nghệ nông nghiệp
+X09,Khối X9,Toán,Hóa học,GDKTPL
+X10,Khối X10,Toán,Hóa học,Tin học
+X11,Khối X11,Toán,Hóa học,Công nghệ công nghiệp
+X12,Khối X12,Toán,Hóa học,Công nghệ nông nghiệp
+X13,Khối X13,Toán,Sinh học,GDKTPL
+X14,Khối X14,Toán,Sinh học,Tin học
+X15,Khối X15,Toán,Sinh học,Công nghệ công nghiệp
+X16,Khối X16,Toán,Sinh học,Công nghệ nông nghiệp
+X17,Khối X17,Toán,Lịch sử,GDKTPL
+X18,Khối X18,Toán,Lịch sử,Tin học
+X19,Khối X19,Toán,Lịch sử,Công nghệ công nghiệp
+X20,Khối X20,Toán,Lịch sử,Công nghệ nông nghiệp
+X21,Khối X21,Toán,Địa lí,GDKTPL
+X22,Khối X22,Toán,Địa lí,Tin học
+X23,Khối X23,Toán,Địa lí,Công nghệ công nghiệp
+X24,Khối X24,Toán,Địa lí,Công nghệ nông nghiệp
+X25,Khối X25,Toán,Tiếng Anh,GDKTPL
+X26,Khối X26,Toán,Tiếng Anh,Tin học
+X27,Khối X27,Toán,Tiếng Anh,Công nghệ công nghiệp
+X28,Khối X28,Toán,Tiếng Anh,Công nghệ nông nghiệp
+X33,Khối X33,0,0,0
+X37,Khối X37,0,0,0
+X46,Khối X46,Toán,Tiếng Nhật,Tin học
+X53,Khối X53,Toán,GDKTPL,Tin học
+X54,Khối X54,Toán,GDKTPL,Công nghệ công nghiệp
+X55,Khối X55,Toán,GDKTPL,Công nghệ nông nghiệp
+X56,Khối X56,Toán,Tin học,Công nghệ công nghiệp
+X57,Khối X57,Toán,Tin học,Công nghệ nông nghiệp
+X58,Khối X58,Ngữ văn,Vật lí,GDKTPL
+X59,Khối X59,Ngữ văn,Vật lí,Tin học
+X60,Khối X60,Ngữ văn,Vật lí,Công nghệ công nghiệp
+X61,Khối X61,Ngữ văn,Vật lí,Công nghệ nông nghiệp
+X62,Khối X62,Ngữ văn,Hóa học,GDKTPL
+X63,Khối X63,Ngữ văn,Hóa học,Tin học
+X64,Khối X64,Ngữ văn,Hóa học,Công nghệ công nghiệp
+X65,Khối X65,Ngữ văn,Hóa học,Công nghệ nông nghiệp
+X66,Khối X66,Ngữ văn,Sinh học,GDKT&PL
+X67,Khối X67,Ngữ văn,Sinh học,Tin học
+X68,Khối X68,Ngữ văn,Sinh học,Công nghệ công nghiệp
+X69,Khối X69,Ngữ văn,Sinh học,Công nghệ nông nghiệp
+X70,Khối X70,Ngữ văn,Lịch sử,GDKTPL
+X71,Khối X71,Ngữ văn,Lịch sử,Tin học
+X72,Khối X72,Ngữ văn,Lịch sử,Công nghệ công nghiệp
+X73,Khối X73,Ngữ văn,Lịch sử,Công nghệ nông nghiệp
+X74,Khối X74,Ngữ văn,Địa lí,GDKTPL
+X75,Khối X75,Ngữ văn,Địa lí,Tin học
+X76,Khối X76,Ngữ văn,Địa lí,Công nghệ công nghiệp
+X77,Khối X77,Ngữ văn,Địa lí,Công nghệ nông nghiệp
+X78,Khối X78,Ngữ văn,GDKTPL,Tiếng Anh
+X79,Khối X79,Ngữ văn,Tiếng Anh,Tin học
+X80,Khối X80,Ngữ văn,Tiếng Anh,Công nghệ công nghiệp
+X81,Khối X81,Ngữ văn,Tiếng Anh,Công nghệ nông nghiệp
+X82,Khối X82,0,0,0
+X86,Khối X86,Ngữ văn,GDKTPL,Tiếng Pháp
+X90,Khối X90,Ngữ văn,GDKTPL,Tiếng Trung
+X91,Khối X91,0,0,0
+X94,Khối X94,Ngữ văn,GDKTPL,Tiếng Đức
+X98,Khối X98,Ngữ văn,GDKTPL,Tiếng Nhật
+XD01,Khối XD01,0,0,0
+XI1,Khối XI1,0,0,0
+XI9,Khối XI9,0,0,0
+Y03,Khối Y3,0,0,0
+Y07,Khối Y7,Ngữ văn,GDKTPL,Tin học
+Y08,Khối Y8,Ngữ văn,GDKTPL,Công nghệ công nghiệp
+Y09,Khối Y9,Ngữ văn,GDKTPL,Công nghệ nông nghiệp
