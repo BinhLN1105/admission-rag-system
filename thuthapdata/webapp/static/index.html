@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thu Thập Dữ Liệu Điểm Chuẩn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #242736;
+      --border: #2e3246;
+      --primary: #4f7ef8;
+      --primary-glow: rgba(79,126,248,0.15);
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --text: #e2e8f0;
+      --text-muted: #8892a4;
+      --accent: #7c3aed;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1d27 0%, #242040 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .logo {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    header h1 { font-size: 1.3rem; font-weight: 700; }
+    header p  { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Layout ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+    .grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title span { color: var(--text); }
+
+    /* ── Steps ── */
+    .step {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px; margin-bottom: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all .2s;
+    }
+    .step:hover { border-color: var(--primary); background: var(--primary-glow); }
+    .step-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem;
+    }
+    .step-info h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 3px; }
+    .step-info p  { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: all .2s; text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-success {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #fff;
+    }
+    .btn-success:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+    /* ── Upload zone ── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+    }
+    .upload-zone input[type=file] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    }
+    .upload-icon { font-size: 36px; margin-bottom: 10px; }
+    .upload-zone p { font-size: 0.88rem; color: var(--text-muted); }
+    .upload-zone strong { color: var(--primary); }
+    .upload-name {
+      margin-top: 10px; padding: 8px 14px;
+      background: var(--surface2); border-radius: 8px;
+      font-size: 0.82rem; color: var(--success);
+      display: none;
+    }
+
+    /* ── Status badge ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-success { background: rgba(34,197,94,0.15); color: var(--success); }
+    .badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+    .badge-error   { background: rgba(239,68,68,0.15);  color: var(--error);   }
+    .badge-info    { background: var(--primary-glow);    color: var(--primary); }
+
+    /* ── Stats ── */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .stat-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; text-align: center;
+    }
+    .stat-num { font-size: 1.8rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── Log ── */
+    .log-box {
+      background: #0a0c12; border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px;
+      max-height: 220px; overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem; line-height: 1.6;
+    }
+    .log-box:empty::before { content: 'Log sẽ hiển thị ở đây...'; color: var(--text-muted); }
+    .log-ok   { color: var(--success); }
+    .log-warn { color: var(--warning); }
+    .log-err  { color: var(--error);   }
+    .log-info { color: var(--primary); }
+
+    /* ── Table ── */
+    .table-wrapper { overflow-x: auto; border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    thead th {
+      background: var(--surface2);
+      padding: 10px 12px; text-align: left;
+      font-weight: 600; white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+    }
+    tbody tr { transition: background .15s; }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(46,50,70,0.5);
+      white-space: nowrap;
+    }
+    .table-container { max-height: 400px; overflow-y: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #fff;
+      animation: spin 0.6s linear infinite;
+      display: none;
+    }
+    .loading .spinner { display: inline-block; }
+
+    /* ── Sections ── */
+    .section-title {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .tab-btns { display: flex; gap: 6px; margin-bottom: 16px; }
+    .tab-btn {
+      padding: 7px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 600;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); cursor: pointer; transition: all .2s;
+    }
+    .tab-btn.active { background: var(--primary-glow); border-color: var(--primary); color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Prompt box ── */
+    .prompt-box {
+      background: #0a0c12; border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px;
+      font-size: 0.82rem; line-height: 1.8; color: #c8d3e8;
+      white-space: pre-wrap; word-break: break-word;
+      max-height: 300px; overflow-y: auto;
+    }
+    code { background: #1e2638; padding: 2px 6px; border-radius: 5px; font-family: monospace; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">📊</div>
+  <div>
+    <h1>Thu Thập Dữ Liệu Điểm Chuẩn</h1>
+    <p>Tự động hóa quy trình: Ảnh → Excel → Master</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="grid">
+
+    <!-- ── CỘT TRÁI: Hướng dẫn + Upload ── -->
+    <div>
+      <!-- Hướng dẫn -->
+      <div class="card">
+        <div class="card-title">🗺️ <span>Quy trình</span></div>
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-info">
+            <h3>Tải file mẫu</h3>
+            <p>Tải <code>input_raw_template.xlsx</code> về, mở bằng Excel.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-info">
+            <h3>Dùng AI tách dữ liệu từ ảnh</h3>
+            <p>Chụp ảnh bảng điểm → đưa cho Gemini/ChatGPT với prompt bên dưới → copy kết quả vào file mẫu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-info">
+            <h3>Upload & Xử lý</h3>
+            <p>Upload file đã điền → nhấn "Xử lý" để ghép mã ngành tự động.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-info">
+            <h3>Tải file Master</h3>
+            <p>Tải <code>diem_chuan_master.xlsx</code> đã hoàn chỉnh.</p>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="downloadTemplate()">⬇️ Tải file mẫu</button>
+        </div>
+      </div>
+
+      <!-- Upload -->
+      <div class="card">
+        <div class="card-title">📤 <span>Upload file dữ liệu</span></div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept=".xlsx" onchange="handleFileSelect(this)"/>
+          <div class="upload-icon">📁</div>
+          <p>Kéo & thả hoặc <strong>nhấn để chọn file Excel mẫu</strong></p>
+          <p style="font-size:0.72rem; margin-top:5px;">Chỉ chấp nhận file .xlsx</p>
+          <div class="upload-name" id="uploadName"></div>
+        </div>
+
+        <div style="text-align:center; margin: 16px 0; color: var(--text-muted); font-size: 0.85rem; position: relative;">
+           <div style="position: absolute; top:50%; left:0; right:0; height:1px; background:var(--border); z-index:1;"></div>
+           <span style="background:var(--surface); padding: 0 10px; position:relative; z-index:2;">HOẶC DÁN TEXT TRỰC TIẾP</span>
+        </div>
+        
+        <div class="paste-zone">
+          <textarea id="pasteInput" placeholder="Dán (Paste) kết quả bảng text từ AI vào đây...&#10;ma_tuyen_sinh&#9;ten_nganh&#9;to_hop&#9;nam&#9;diem_chuan&#9;chi_tieu&#10;NLS&#9;Công nghệ thông tin&#9;A00&#9;2025&#9;23.22&#9;210" style="width:100%; height:120px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px; color:var(--text); font-family:monospace; font-size:0.8rem; resize:vertical;"></textarea>
+        </div>
+
+        <div class="btn-group" style="margin-top:16px;">
+          <button class="btn btn-outline" id="btnProcess" onclick="runProcess()" disabled>
+            <div class="spinner" id="spinProcess"></div>
+            ⚙️ Xử lý File Upload
+          </button>
+          <button class="btn btn-primary" id="btnProcessText" onclick="runProcessText()">
+            <div class="spinner" id="spinProcessText"></div>
+            ⚡ Xử lý Text đã dán
+          </button>
+        </div>
+      </div>
+
+      <!-- Prompt AI -->
+      <div class="card">
+        <div class="card-title">🤖 <span>Prompt cho AI</span></div>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:12px;">Copy prompt này, gửi kèm ảnh bảng điểm cho Gemini / ChatGPT:</p>
+        <div class="prompt-box" id="promptBox">Tôi có ảnh chứa bảng điểm chuẩn của một trường đại học. Hãy đọc và trích xuất dữ liệu ra định dạng bảng với các cột sau (phân cách bằng tab):
+
+ma_tuyen_sinh	ten_nganh	to_hop	nam	diem_chuan	chi_tieu
+
+Quy tắc:
+- <code>ma_tuyen_sinh</code>: mã tuyển sinh ngắn của trường (VD: BKA, UIT, NEU, FTU, PTIT...)
+- <code>ten_nganh</code>: tên ngành học chính xác theo ảnh  (nếu có tên phân hiệu hãy cái gì khác ngoài tên ngành như chương trình tiên tiến, nâng cao, trình dộ cao đẳng, đại học thì bạn hãy loại bỏ và chỉ giữ lại tên nganh)
+- <code>to_hop</code>: tổ hợp môn xét tuyển (A00, A01, D01...) — nếu có nhiều tổ hợp thì tách thành nhiều dòng
+- <code>nam</code>: năm của điểm chuẩn (VD: 2025)
+- <code>diem_chuan</code>: điểm chuẩn (số thập phân, VD: 27.50)
+- <code>chi_tieu</code>: chỉ tiêu tuyển sinh (số nguyên, để 0 nếu không có)
+
+Chỉ trả về bảng dữ liệu, không giải thích thêm.</div>
+        <button class="btn btn-outline" style="margin-top:12px;" onclick="copyPrompt()">📋 Copy prompt</button>
+        <span id="copyMsg" style="font-size:0.78rem; color:var(--success); margin-left:10px; display:none;">✅ Đã copy!</span>
+      </div>
+    </div>
+
+    <!-- ── CỘT PHẢI: Kết quả ── -->
+    <div>
+      <!-- Stats -->
+      <div class="card" id="statsCard" style="display:none;">
+        <div class="section-title">
+          📊 Kết quả xử lý
+          <button class="btn btn-success" onclick="downloadMaster()">⬇️ Tải Master Excel</button>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-num" id="statTotal" style="color:var(--primary)">0</div>
+            <div class="stat-label">Tổng dòng</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="statAdded" style="color:var(--success)">0</div>
+            <div class="stat-label">Đã thêm mới</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="statSkipped" style="color:var(--warning)">0</div>
+            <div class="stat-label">Bỏ qua</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:8px; font-size:0.82rem; color:var(--text-muted);">📋 Log xử lý:</div>
+        <div class="log-box" id="logBox"></div>
+      </div>
+
+      <!-- Preview dữ liệu -->
+      <div class="card">
+        <div class="section-title">
+          🗂️ Dữ liệu Master
+          <button class="btn btn-outline" style="font-size:0.78rem;" onclick="loadMasterPreview()">🔄 Tải lại</button>
+        </div>
+
+        <div class="tab-btns">
+          <button class="tab-btn active" onclick="switchTab('diem_chuan')">Điểm Chuẩn</button>
+          <button class="tab-btn" onclick="switchTab('truong')">Trường</button>
+        </div>
+
+        <div class="tab-content active" id="tab-diem_chuan">
+          <div id="dcCount" style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;"></div>
+          <div class="table-container">
+            <table id="tableDC">
+              <thead><tr>
+                <th>Mã Trường</th><th>Tên Trường</th><th>Mã Ngành</th>
+                <th>Tên Ngành</th><th>Tổ Hợp</th><th>Năm</th>
+                <th>Điểm Chuẩn</th><th>Chỉ Tiêu</th>
+              </tr></thead>
+              <tbody id="bodyDC"><tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:30px;">Chưa có dữ liệu. Hãy upload và xử lý file Excel.</td></tr></tbody>
+            </table>
+          </div>
+          <!-- Phân trang -->
+          <div id="paginationDC" style="display:flex; justify-content:center; align-items:center; gap:10px; margin-top:16px;">
+            <button class="btn btn-outline" id="btnPrevPage" style="padding:6px 12px;" onclick="prevPage()">◀ Trước</button>
+            <span id="pageInfo" style="font-size:0.85rem; font-weight:600; min-width:80px; text-align:center;">Trang 1 / 1</span>
+            <button class="btn btn-outline" id="btnNextPage" style="padding:6px 12px;" onclick="nextPage()">Sau ▶</button>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-truong">
+          <div id="trCount" style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;"></div>
+          <div class="table-container">
+            <table id="tableTR">
+              <thead><tr>
+                <th>Mã Trường</th><th>Tên Trường</th><th>Khu Vực</th>
+                <th>Loại Trường</th><th>Học Phí (VNĐ/năm)</th>
+              </tr></thead>
+              <tbody id="bodyTR"><tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">Chưa có dữ liệu.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let uploadedOk = false;
+
+  // ── Drag & Drop ──────────────────────────────────────────────
+  const zone = document.getElementById('uploadZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) uploadFile(file);
+  });
+
+  function handleFileSelect(input) {
+    if (input.files[0]) uploadFile(input.files[0]);
+  }
+
+  async function uploadFile(file) {
+    if (!file.name.endsWith('.xlsx')) {
+      alert('Chỉ chấp nhận file .xlsx!'); return;
+    }
+    const nameEl = document.getElementById('uploadName');
+    nameEl.textContent = '⏳ Đang upload: ' + file.name;
+    nameEl.style.display = 'block';
+
+    const fd = new FormData();
+    fd.append('file', file);
+    try {
+      const res = await fetch('/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail);
+
+      nameEl.textContent = '✅ ' + data.message;
+      nameEl.style.color = 'var(--success)';
+      uploadedOk = true;
+      document.getElementById('btnProcess').disabled = false;
+    } catch (e) {
+      nameEl.textContent = '❌ Lỗi: ' + e.message;
+      nameEl.style.color = 'var(--error)';
+    }
+  }
+
+  // ── Download template ──────────────────────────────────────────
+  function downloadTemplate() {
+    window.location.href = '/download-template';
+  }
+
+  // ── Xử lý File ────────────────────────────────────────────────────
+  async function runProcess() {
+    const btn  = document.getElementById('btnProcess');
+    const spin = document.getElementById('spinProcess');
+    btn.disabled = true;
+    spin.style.display = 'inline-block';
+    
+    await executeProcessRequest('/process', { method: 'POST' });
+    
+    btn.disabled = false;
+    spin.style.display = 'none';
+  }
+
+  // ── Xử lý Text ────────────────────────────────────────────────────
+  async function runProcessText() {
+    const text = document.getElementById('pasteInput').value;
+    if (!text.trim()) {
+      alert("Vui lòng dán text vào ô trước khi xử lý!");
+      return;
+    }
+
+    const btn  = document.getElementById('btnProcessText');
+    const spin = document.getElementById('spinProcessText');
+    btn.disabled = true;
+    spin.style.display = 'inline-block';
+    
+    await executeProcessRequest('/process-text', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text })
+    });
+    
+    btn.disabled = false;
+    spin.style.display = 'none';
+  }
+
+  // Common request handler
+  async function executeProcessRequest(url, options) {
+    document.getElementById('statsCard').style.display = 'none';
+    try {
+      const res  = await fetch(url, options);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail);
+
+      // Stats
+      document.getElementById('statTotal').textContent   = data.total;
+      document.getElementById('statAdded').textContent   = data.added;
+      document.getElementById('statSkipped').textContent = data.skipped;
+      document.getElementById('statsCard').style.display = 'block';
+
+      // Logs
+      const logBox = document.getElementById('logBox');
+      logBox.innerHTML = '';
+      (data.logs || []).forEach(msg => {
+        const div = document.createElement('div');
+        div.className = msg.includes('✅') ? 'log-ok' : msg.includes('⚠️') ? 'log-warn' : msg.includes('❌') ? 'log-err' : 'log-info';
+        div.textContent = msg;
+        logBox.appendChild(div);
+      });
+      logBox.scrollTop = logBox.scrollHeight;
+
+      // Cập nhật preview master
+      await loadMasterPreview();
+    } catch (e) {
+      alert('❌ Lỗi xử lý:\n' + e.message);
+    }
+  }
+
+  // ── Preview Master & Phân Trang ──────────────────────────────
+  let globalDC = [];
+  let currentPage = 1;
+  const PAGE_SIZE = 50;
+
+  async function loadMasterPreview() {
+    try {
+      const res  = await fetch('/preview-master');
+      const data = await res.json();
+
+      globalDC = data.diem_chuan || [];
+      currentPage = 1;
+
+      document.getElementById('trCount').textContent = `${data.truong.length} trường`;
+
+      // Table điểm chuẩn sẽ được render theo phân trang
+      renderPage();
+
+      // Table trường (ít nên render 1 lần)
+      const bodyTR = document.getElementById('bodyTR');
+      if (data.truong.length === 0) {
+        bodyTR.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:30px;">Chưa có dữ liệu.</td></tr>';
+      } else {
+        bodyTR.innerHTML = data.truong.map(r => `
+          <tr>
+            <td><span class="badge badge-info">${r.ma_truong||''}</span></td>
+            <td>${r.ten_truong||''}</td>
+            <td>${r.khu_vuc||''}</td>
+            <td>${r.loai_truong||''}</td>
+            <td>${(r.hoc_phi||0).toLocaleString('vi-VN')} ₫</td>
+          </tr>`).join('');
+      }
+    } catch (e) {
+      console.error('Preview error:', e);
+    }
+  }
+
+  function renderPage() {
+    const totalPages = Math.max(1, Math.ceil(globalDC.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end   = Math.min(start + PAGE_SIZE, globalDC.length);
+
+    document.getElementById('pageInfo').textContent = `Trang ${currentPage} / ${totalPages}`;
+    document.getElementById('btnPrevPage').disabled = (currentPage === 1 || globalDC.length === 0);
+    document.getElementById('btnNextPage').disabled = (currentPage === totalPages || globalDC.length === 0);
+
+    const bodyDC = document.getElementById('bodyDC');
+    if (globalDC.length === 0) {
+      document.getElementById('dcCount').textContent = 'Chưa có dữ liệu';
+      bodyDC.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:30px;">Chưa có dữ liệu. Hãy upload và xử lý file Excel.</td></tr>';
+      document.getElementById('paginationDC').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('paginationDC').style.display = 'flex';
+    document.getElementById('dcCount').textContent = `Hiển thị bảng điểm chuẩn: từ ${start + 1} đến ${end} / (Tổng cộng ${globalDC.length} dòng)`;
+
+    const currentData = globalDC.slice(start, end);
+    bodyDC.innerHTML = currentData.map(r => `
+      <tr>
+        <td><span class="badge badge-info">${r.ma_truong||''}</span></td>
+        <td>${r.ten_truong||''}</td>
+        <td><code>${r.ma_nganh||''}</code></td>
+        <td>${r.ten_nganh||''}</td>
+        <td><span class="badge badge-success">${r.ma_to_hop||''}</span></td>
+        <td>${r.nam||''}</td>
+        <td style="font-weight:600;color:var(--primary)">${r.diem_chuan||''}</td>
+        <td>${r.chi_tieu||0}</td>
+      </tr>`).join('');
+  }
+
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPage();
+    }
+  }
+
+  function nextPage() {
+    const totalPages = Math.ceil(globalDC.length / PAGE_SIZE);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderPage();
+    }
+  }
+
+  // ── Download Master ───────────────────────────────────────────
+  function downloadMaster() {
+    window.location.href = '/download-master';
+  }
+
+  // ── Tabs ─────────────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach((b,i) => {
+      b.classList.toggle('active', ['diem_chuan','truong'][i] === name);
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  // ── Copy Prompt ───────────────────────────────────────────────
+  function copyPrompt() {
+    const text = document.getElementById('promptBox').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const msg = document.getElementById('copyMsg');
+      msg.style.display = 'inline';
+      setTimeout(() => msg.style.display = 'none', 2000);
+    });
+  }
+
+  // Load master khi vào trang
+  loadMasterPreview();
+</script>
+</body>
+</html>
