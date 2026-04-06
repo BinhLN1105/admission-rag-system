@@ -11,3 +11,4 @@ chromadb
 requests
 beautifulsoup4
 colorama
+seaborn

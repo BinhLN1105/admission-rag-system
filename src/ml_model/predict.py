@@ -7,10 +7,14 @@ import os
 import joblib
 import pandas as pd
 
-BASE_DIR   = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-MODELS_DIR = os.path.join(BASE_DIR, "models")
+from src.utils.config import load_priority_scores
 
-KV_MAP = {"KV1": 0.75, "KV2": 0.5, "KV2NT": 0.25, "KV3": 0.0}
+# ---------- Đường dẫn ----------
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+MODELS_DIR  = os.path.join(BASE_DIR, "models")
+
+# Tải điểm ưu tiên lần đầu
+PRIORITY_MAP = load_priority_scores()
 
 
 def _load_models():
@@ -41,7 +45,7 @@ def predict_probability(
     """
     rf, lr, scaler = _load_models()
 
-    diem_cong        = KV_MAP.get(khu_vuc.upper(), 0.0)
+    diem_cong = float(PRIORITY_MAP.get(str(khu_vuc).upper().replace("-", ""), 0.0))
     diem_co_uu_tien  = float(round(float(diem_thi_sinh + diem_cong), 2))
     trung_binh       = float(round(float((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3), 2))
     xu_huong         = float(round(float(diem_chuan_2025 - diem_chuan_2024), 2))

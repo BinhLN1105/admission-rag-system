@@ -1,3 +1,10 @@
+import sys
+import os
+
+# Add project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, project_root)
+
 from src.rag.vector_store import VectorStore
 
 class Retriever:

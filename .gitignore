@@ -62,8 +62,16 @@ data/tmp_*.csv
 Thumbs.db
 Desktop.ini
 
-# HuggingFace cache
+# HuggingFace & Environment cache
 .cache/
+.python-version
+poetry.lock
+Pipfile.lock
 
-# Logs
+# Logs & Backups
 *.log
+temp/
+tmp/
+models_backup/
+backup/
+backups/

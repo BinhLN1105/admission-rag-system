@@ -1,5 +1,11 @@
 import os
+import sys
 import chromadb
+
+# Add project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, project_root)
+
 from src.rag.embedder import Embedder
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))

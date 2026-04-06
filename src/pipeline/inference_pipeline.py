@@ -1,7 +1,13 @@
 import os
+import sys
 import re
 import difflib
 import pandas as pd
+
+# Add project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, project_root)
+
 from src.rag.retriever import Retriever
 from src.ml_model.predict import predict_probability
 
@@ -30,7 +36,38 @@ class InferencePipeline:
         # 2. Load Score Database
         data_path = os.path.join(data_dir, "ml_processed_data.csv")
         try:
-            self.df_diem_chuan = pd.read_csv(data_path)
+            raw_df = pd.read_csv(data_path)
+            
+            # Chuẩn hóa cột ma_nganh
+            col_ma = 'ma_nganh_chuan' if 'ma_nganh_chuan' in raw_df.columns else 'ma_nganh'
+            col_ten = 'ten_nganh_chuan' if 'ten_nganh_chuan' in raw_df.columns else 'ten_nganh'
+            
+            # Chuyển đổi dữ liệu từ dạng dọc (long) sang dạng ngang (wide)
+            # Giữ lại các thông tin căn bản
+            pivot_idx = ['ma_truong', 'ten_truong', col_ma, col_ten, 'ma_to_hop']
+            self.df_diem_chuan = raw_df.pivot_table(
+                index=pivot_idx,
+                columns='nam',
+                values='diem_chuan'
+            ).reset_index()
+            
+            # Đổi tên các cột năm thành diem_chuan_YYYY
+            self.df_diem_chuan.columns = [
+                f"diem_chuan_{int(col)}" if isinstance(col, (int, float, str)) and str(col).isdigit() 
+                else col for col in self.df_diem_chuan.columns
+            ]
+            
+            # Đảm bảo có đủ các cột chuẩn
+            for year in [2023, 2024, 2025]:
+                if f"diem_chuan_{year}" not in self.df_diem_chuan.columns:
+                    self.df_diem_chuan[f"diem_chuan_{year}"] = pd.NA
+                    
+            # Map lại ma_nganh_chuan thành ma_nganh để tương thích với code cũ trong pipeline
+            if 'ma_nganh' not in self.df_diem_chuan.columns and col_ma in self.df_diem_chuan.columns:
+                self.df_diem_chuan['ma_nganh'] = self.df_diem_chuan[col_ma]
+            if 'ten_nganh' not in self.df_diem_chuan.columns and col_ten in self.df_diem_chuan.columns:
+                self.df_diem_chuan['ten_nganh'] = self.df_diem_chuan[col_ten]
+
             # Pre-compute normalized names for fuzzy matching
             self._school_data = []
             for ma_truong in self.df_diem_chuan['ma_truong'].unique():
