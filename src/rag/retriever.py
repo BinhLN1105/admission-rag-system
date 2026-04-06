@@ -1,14 +1,39 @@
+import sys
+import os
+
+# Add project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, project_root)
+
 from src.rag.vector_store import VectorStore
 
 class Retriever:
     def __init__(self):
         self.store = VectorStore()
 
-    def retrieve(self, query: str, ma_nganh: str = "", top_k: int = 2) -> str:
+    def retrieve(self, query: str, ma_nganh: str = "", to_hop: str = "", ma_truong: str = "", top_k: int = 2) -> str:
         # Tự động gộp ma_nganh vào query để search vector cho chuẩn
-        search_query = f"{query} {ma_nganh}".strip()
-        results = self.store.search(search_query, top_k=15)
+        search_query = f"{query} {ma_nganh} {ma_truong} {to_hop}".strip()
         
+        if ma_truong:
+            # 1. Toàn bộ filter (Nganh + Truong + ToHop)
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong, to_hop=to_hop)
+            
+            # 2. Nới lỏng to_hop (Giữ Truong + Nganh)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, ma_truong=ma_truong)
+                
+            # 3. Nới lỏng ma_nganh (GIỮ Truong) - Để lấy thông tin chung về trường
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_truong=ma_truong)
+        else:
+            # Nếu không có ma_truong -> Tìm theo ngành (Global)
+            results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh, to_hop=to_hop)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15, ma_nganh=ma_nganh)
+            if not results['documents'] or not results['documents'][0]:
+                results = self.store.search(search_query, top_k=15)
+            
         if not results['documents'] or not results['documents'][0]:
             return "Không có thông tin liên quan trong cơ sở dữ liệu."
             
@@ -20,7 +45,7 @@ class Retriever:
         scored_docs = []
         for doc in retrieved_docs:
             doc_lower = doc.lower()
-            score = 0
+            score: int = 0
             # CỘNG ĐIỂM NẶNG cho các từ khóa cốt lõi (Mã trường, Tên trường chính xác)
             if "bka" in query_words and "bka" in doc_lower: score += 10
             if "bách khoa" in query.lower() and "bách khoa" in doc_lower: score += 10
@@ -39,7 +64,7 @@ class Retriever:
         scored_docs.sort(key=lambda x: x[0], reverse=True)
         
         # Lấy top_k văn bản sau khi rerank
-        best_docs = [doc for score, doc in scored_docs[:top_k]]
+        best_docs = [doc for doc_score, doc in scored_docs[0:top_k]]
         
         context = "\n\n".join(best_docs)
         return context

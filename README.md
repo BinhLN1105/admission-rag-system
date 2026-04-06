@@ -1,70 +1,106 @@
-# Hệ Thống Tư Vấn Tuyển Sinh RAG + ML
+# Hệ Thống Tư Vấn Tuyển Sinh Thông Minh (RAG + ML)
 
-Dự án xây dựng hệ thống tư vấn tuyển sinh đại học thông minh, kết hợp giữa mô hình học máy (Machine Learning) để dự đoán xác suất trúng tuyển và hệ thống RAG (Retrieval-Augmented Generation) để cung cấp thông tin chi tiết về trường/ngành học.
+Dự án phát triển hệ thống hỗ trợ tư vấn tuyển sinh đại học, kết hợp sức mạnh của **Machine Learning** (dự đoán xác suất) và **RAG - Retrieval-Augmented Generation** (cung cấp thông tin chi tiết). Hệ thống sử dụng dữ liệu điểm chuẩn thực tế giai đoạn 2023-2025.
 
-## Tổng quan Kiến Trúc
+---
 
-Dự án được triển khai theo 5 giai đoạn:
-1. **Dữ liệu & Cấu trúc**: Khởi tạo thư mục và dữ liệu giả lập (Synthetic Data).
-2. **Machine Learning Model**: Huấn luyện Random Forest và Logistic Regression để dự đoán xác suất đỗ đại học dựa trên lịch sử điểm chuẩn. Sử dụng Ensemble Learning tính trung bình xác suất.
-3. **RAG System**: Sử dụng `sentence-transformers` và `ChromaDB` để nhúng (embed) và lưu trữ thông tin về các trường đại học, ngành học. Cải tiến Retrieval bằng thuật toán kết hợp Vector Similarity và Keyword Matching (Hybrid Search).
-4. **Pipeline Kết nối**: Tổng hợp kết quả từ ML và RAG để tạo ra prompt chất lượng cho LLM (Large Language Model) sinh câu trả lời tự nhiên.
-5. **Web Application**: Giao diện Web xây dựng bằng FastAPI, HTML/CSS/JS thuần tư vấn phản hồi trực tiếp cho người dùng.
+## 🚀 Các Tính Năng Chính
 
-## Cấu trúc thư mục
+- **Dự đoán trúng tuyển (ML)**: Sử dụng mô hình Ensemble (Random Forest + Logistic Regression) để tính toán xác suất dựa trên điểm thi, khu vực ưu tiên và xu hướng điểm chuẩn 3 năm.
+- **Tư vấn thông minh (RAG)**: Tìm kiếm và trả lời các câu hỏi về ngành nghề, học phí, và thông tin trường dựa trên cơ sở dữ liệu vector (ChromaDB).
+- **Chuẩn hóa Mã ngành**: Tự động ánh xạ các mã ngành cũ/biến thể về mã chuẩn 7 chữ số của Bộ GD&ĐT (đầu số 7) để đảm bảo tra cứu chính xác xuyên suốt các năm.
+- **Điểm ưu tiên Động**: Tự động tải và áp dụng điểm cộng khu vực từ file cấu hình `data/raw/uu_tien.csv`.
+- **Giao diện Autocomplete**: Danh sách chọn ngành đã được làm sạch, mỗi mã ngành chỉ hiển thị một tên gọi chuẩn nhất, giúp người dùng dễ dàng tìm kiếm.
+
+## 📂 Cấu Trúc Dự Án
 
 ```text
 Project_AI/
-├── app/                  # Web app (FastAPI)
-│   ├── static/           # HTML, CSS, JS
-│   ├── main.py           # Khởi chạy server
-│   ├── routes.py         # API Endpoints
-│   └── schema.py         # Pydantic schemas
-├── data/                 # Dữ liệu
-│   ├── raw/              # Dữ liệu điểm chuẩn các năm (.csv)
-│   ├── processed/        # Dữ liệu sau feature engineering
-│   ├── rag_documents/    # Văn bản dành cho RAG (.txt)
-│   └── generate_data.py  # Script tạo dữ liệu giả lập
-├── models/               # Nơi lưu Models
-│   ├── random_forest.pkl
-│   ├── logistic_regression.pkl
-│   ├── scaler.pkl
-│   └── vector_db/        # Database ChromaDB
-├── notebooks/            # Jupyter notebooks thử nghiệm
-├── src/                  # Mã nguồn chính
-│   ├── data_processing/  # Tiền xử lý dữ liệu
-│   ├── ml_model/         # Script Train, Predict, Evaluate ML
-│   ├── rag/              # Script Embedder, Retriever, VectorStore
-│   └── pipeline/         # Kết nối RAG và ML
-├── .env                  # Biến môi trường
-├── requirements.txt      # Thư viện Python
-└── README.md             # Tệp hướng dẫn
+├── app/                  # Ứng dụng Web (FastAPI)
+│   ├── main.py           # Entry point
+│   ├── routes.py         # API Endpoints (/api/tu-van, /api/majors)
+│   └── static/           # Giao diện HTML/CSS/JS (Vanilla JS)
+├── data/                 # Quản lý dữ liệu
+│   ├── raw/              # Dữ liệu gốc (diem_chuan_*.csv, uu_tien.csv)
+│   ├── ml_processed_data.csv # Dữ liệu đã gộp và chuẩn hóa mã ngành
+│   └── rag_processed_data.json # Văn bản tri thức cho hệ thống RAG
+├── models/               # Lưu trữ Model & Scaler (.pkl)
+├── src/                  # Mã nguồn xử lý cốt lõi
+│   ├── data_processing/  # Gộp dữ liệu, tạo dữ liệu mẫu, điểm ưu tiên
+│   ├── ml_model/         # Huấn luyện (train.py) và Dự đoán (predict.py)
+│   ├── rag/              # Xây dựng Index và Retriever
+│   └── pipeline/         # Inference Pipeline (Kết nối ML + RAG)
+└── requirements.txt      # Thư viện phụ thuộc
 ```
 
-## Cài đặt & Khởi chạy
+## 🛠️ Hướng Dẫn Cài Đặt
 
-**Bước 1: Cài đặt thư viện**
+**1. Cài đặt môi trường**
 ```bash
+# Tạo môi trường ảo (Khuyến nghị)
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate # Linux/Mac
+
+# Cài đặt thư viện
 pip install -r requirements.txt
 ```
 
-**Bước 2: Khởi tạo Dữ liệu & Huấn luyện Model**
-Chạy lệnh sau để tạo dummy data (hoặc load data thật), huấn luyện ML và Index văn bản cho RAG:
+**2. Chuẩn bị dữ liệu & Huấn luyện**
+Hệ thống cần trải qua quy trình xử lý dữ liệu trước khi chạy:
 ```bash
-python data/generate_data.py
+# 1. Gộp và chuẩn hóa mã ngành (2023-2025)
+python src/data_processing/merge_data.py
+
+# 2. Tạo dữ liệu huấn luyện mẫu (Synthetic)
+python src/data_processing/generate_synthetic.py
+
+# 3. Huấn luyện mô hình AI
 python src/ml_model/train.py
+
+# 4. Xây dựng chỉ mục tìm kiếm RAG
 python src/rag/build_index.py
 ```
 
-**Bước 3: Khởi chạy Web Server**
+**3. Khởi chạy ứng dụng**
 ```bash
 python app/main.py
 ```
-*(Hoặc chạy lệnh `uvicorn app.main:app --reload`)*
+Hoặc có thể dùng lệnh sau để chạy với uvicorn:
+```bash
+uvicorn app.main:app --reload
+```
+Truy cập: `http://localhost:8000`
 
-Truy cập địa chỉ `http://localhost:8000` trên trình duyệt để sử dụng hệ thống!
+## 📊 Hiệu năng mô hình
 
-## Nâng cấp tương lai
-- Kết nối pipeline với API thật của OpenAI (`gpt-4`) hoặc Google Gemini để lấy đoạn sinh văn bản tự nhiên thay vì trả về Prompt mẫu.
-- Thay thế Synthetic Data bằng dữ liệu thật được Crawl từ các trang điểm chuẩn.
-- Tinh chỉnh RAG (BGE-M3 / PhoBERT) để embedding tiếng Việt chuẩn xác hơn.
+Sau khi huấn luyện, bạn có thể kiểm tra hiệu năng của mô hình qua các biểu đồ trực quan trong thư mục `reports/figures/`:
+
+| Tầm quan trọng của yếu tố | Ma trận nhầm lẫn (Confusion Matrix) |
+| :---: | :---: |
+| ![Feature Importance](reports/figures/feature_importance.png) | ![Confusion Matrix](reports/figures/confusion_matrix.png) |
+
+> [!NOTE]
+> Các biểu đồ này giúp bạn hiểu tại sao AI đưa ra quyết định (Feature Importance) và tỉ lệ dự đoán chính xác thực tế trên tập dữ liệu kiểm tra (Confusion Matrix).
+
+---
+
+## 📊 Quy Trình Xử Lý (Pipeline)
+
+1.  **Dữ liệu đầu vào**: Hệ thống nhận điểm thi, khu vực, khối thi và ngành/trường mục tiêu.
+2.  **Chuẩn hóa**: `InferencePipeline` tự động ánh xạ tên trường/ngành sang mã chuẩn.
+3.  **ML Inference**:
+    - Chuyển dữ liệu điểm chuẩn 3 năm của ngành đó sang dạng ngang (Wide format).
+    - Tính toán xu hướng và chênh lệch điểm.
+    - Chạy mô hình Ensemble để đưa ra xác suất đỗ (%).
+4.  **RAG Context**: Tìm kiếm các tài liệu liên quan đến ngành/trường trong Vector DB.
+5.  **Output**: Trả về kết quả dự đoán kèm theo đánh giá định tính và thông tin tư vấn chi tiết từ RAG.
+
+## 🔄 Cập Nhật & Bảo Trì
+
+- **Cập nhật điểm ưu tiên**: Sửa file `data/raw/uu_tien.csv`. Hệ thống sẽ tự động nhận diện thay đổi khi bạn gọi API dự đoán.
+- **Thêm dữ liệu điểm chuẩn mới**: Thêm file `.csv` vào `data/raw/` -> Chạy lại script `merge_data.py` -> `train.py`.
+- **Duy nhất Mã ngành**: Trong `src/data_processing/merge_data.py`, danh mục `COMMON_MAJOR_MAP` chứa các quy tắc ép mã ngành về đầu số 7 chuẩn hóa.
+
+---
+*Dự án được tối ưu hóa cho dữ liệu tuyển sinh Việt Nam giai đoạn 2023-2025.*

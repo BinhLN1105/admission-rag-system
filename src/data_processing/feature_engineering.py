@@ -30,6 +30,11 @@ def load_features(csv_path: str):
     return X, y
 
 
+from src.utils.config import load_priority_scores
+
+# Tải điểm ưu tiên
+PRIORITY_MAP = load_priority_scores()
+
 def build_input_vector(
     diem_thi_sinh: float,
     khu_vuc: str,
@@ -41,13 +46,12 @@ def build_input_vector(
     Tạo vector features từ input của người dùng.
     Dùng khi gọi predict lúc runtime.
     """
-    KV_MAP = {"KV1": 0.75, "KV2": 0.5, "KV2NT": 0.25, "KV3": 0.0}
-    diem_cong = KV_MAP.get(khu_vuc.upper(), 0.0)
+    diem_cong = float(PRIORITY_MAP.get(str(khu_vuc).upper().replace("-", ""), 0.0))
     diem_co_uu_tien = diem_thi_sinh + diem_cong
 
-    trung_binh = round((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3, 2)
-    xu_huong   = round(diem_chuan_2025 - diem_chuan_2024, 2)
-    chenh_lech = round(diem_co_uu_tien - diem_chuan_2025, 2)
+    trung_binh = float(round(float((diem_chuan_2023 + diem_chuan_2024 + diem_chuan_2025) / 3), 2))
+    xu_huong   = float(round(float(diem_chuan_2025 - diem_chuan_2024), 2))
+    chenh_lech = float(round(float(diem_co_uu_tien - diem_chuan_2025), 2))
 
     return pd.DataFrame([{
         "diem_thi_sinh":   diem_thi_sinh,

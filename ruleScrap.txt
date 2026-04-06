@@ -1,0 +1,9 @@
+Mỗi lần bạn cào thêm dữ liệu mới, chỉ cần chạy lại pipeline hoàn chỉnh:
+
+cd D:\Project_AI\notebooks\scrap\VNexpress
+python preprocess_data.py
+cd D:\Project_AI
+python -m src.rag.build_index
+python -m src.ml_model.train
+cd app
+python .\main.py
