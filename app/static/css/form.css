@@ -1,0 +1,215 @@
+/* ====================== FORM.CSS - PREMIUM BLUE 2026 ====================== */
+
+/* Form Card */
+.form-card {
+  background: white;
+  border-radius: 28px;
+  box-shadow: var(--shadow-lg);
+  padding: 56px 48px;
+  max-width: 880px;
+  margin: 40px auto;
+  border: 1px solid var(--gray-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+}
+
+/* Title */
+.form-title {
+  text-align: center;
+  font-size: 2.35rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.form-title::after {
+  content: "";
+  width: 100px;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  display: block;
+  margin: 20px auto 0;
+  border-radius: 4px;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin-top: -10px;
+  margin-bottom: 40px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 32px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1e2937;
+  font-size: 1.08rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 16px 22px;
+  border: 2px solid var(--gray-200);
+  border-radius: 16px;
+  font-size: 1.06rem;
+  background: #fff;
+  transition: var(--transition);
+  color: var(--text);
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.15);
+}
+
+/* Dropdown Majors */
+.custom-dropdown-container {
+  position: relative;
+}
+
+#majors_dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  max-height: 380px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+  margin-top: 8px;
+  display: none;
+}
+
+.dropdown-item {
+  padding: 16px 22px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--gray-200);
+  transition: var(--transition);
+}
+
+.dropdown-item:hover {
+  background: #f0f9ff;
+  color: var(--primary);
+}
+
+/* Button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.22rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: var(--transition);
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(30, 64, 175, 0.4);
+}
+
+.btn-primary i {
+  font-size: 1.4rem;
+}
+
+/* Result Card */
+.result-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+  padding: 48px;
+  margin-top: 50px;
+  border-left: 8px solid var(--accent);
+}
+
+.result-card h3 {
+  margin-bottom: 32px;
+  font-size: 1.9rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text);
+}
+
+/* Loading */
+#loading {
+  text-align: center;
+  padding: 90px 20px;
+  color: var(--primary);
+}
+
+#loading i {
+  font-size: 3.4rem;
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+
+/* Markdown */
+.markdown-body {
+  line-height: 1.85;
+  font-size: 1.08rem;
+  color: #334155;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-card {
+    padding: 40px 32px;
+    margin: 20px 16px;
+    border-radius: 20px;
+  }
+  .result-card {
+    padding: 38px 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 32px 24px;
+  }
+  input,
+  select,
+  textarea {
+    padding: 15px 18px;
+    font-size: 1rem;
+  }
+  .form-title {
+    font-size: 2rem;
+  }
+}

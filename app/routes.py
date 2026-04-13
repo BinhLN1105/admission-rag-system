@@ -1,56 +1,94 @@
 import os
 import pandas as pd
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.schema import InferenceRequest, InferenceResponse
-from src.pipeline.inference_pipeline import InferencePipeline
 
+# ==================== LAZY LOADING PIPELINE ====================
+pipeline = None
+
+
+def get_pipeline():
+    """Khởi tạo InferencePipeline chỉ khi cần (Lazy Loading)"""
+    global pipeline
+    if pipeline is None:
+        try:
+            from src.pipeline.inference_pipeline import InferencePipeline
+            print("🚀 Đang khởi tạo InferencePipeline (SentenceTransformer)...")
+            pipeline = InferencePipeline()
+            print("✅ InferencePipeline đã load thành công!")
+        except Exception as e:
+            print(f"❌ Lỗi khởi tạo InferencePipeline: {e}")
+            pipeline = None
+            raise HTTPException(
+                status_code=503,
+                detail="Hệ thống AI đang khởi tạo. Vui lòng chờ vài giây và thử lại."
+            )
+    return pipeline
+
+
+# ==================== ROUTER ====================
 router = APIRouter()
-pipeline = InferencePipeline()
+
 
 @router.post("/tu-van", response_model=InferenceResponse)
 async def tu_van_tuyen_sinh(request: InferenceRequest):
-    result = pipeline.run(
-        query=request.query,
-        ma_nganh=request.ma_nganh,
-        to_hop=request.to_hop,
-        diem=request.diem_thi,
-        khu_vuc=request.khu_vuc
-    )
-    
-    return InferenceResponse(ket_qua=result)
+    """Endpoint tư vấn tuyển sinh bằng AI"""
+    if not request.diem_thi or not request.ma_nganh or not request.to_hop:
+        raise HTTPException(status_code=422, detail="Thiếu thông tin bắt buộc")
+
+    try:
+        pipe = get_pipeline()
+        result = pipe.run(
+            query=request.query or "",
+            ma_nganh=request.ma_nganh,
+            to_hop=request.to_hop,
+            diem=request.diem_thi,
+            khu_vuc=request.khu_vuc
+        )
+        return InferenceResponse(ket_qua=result)
+
+    except Exception as e:
+        print(f"Lỗi khi chạy pipeline: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Đã xảy ra lỗi trong quá trình tư vấn. Vui lòng thử lại sau."
+        )
+
 
 @router.get("/majors")
 async def get_majors():
     """
-    Trả về danh sách tất cả các Mã ngành và Tên ngành duy nhất có trong dữ liệu huấn luyện.
+    Trả về danh sách ngành học để frontend dùng cho dropdown tìm kiếm
     """
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    csv_path = os.path.join(BASE_DIR, "data", "ml_processed_data.csv")
-    if os.path.exists(csv_path):
+    try:
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        csv_path = os.path.join(BASE_DIR, "data", "ml_processed_data.csv")
+
+        if not os.path.exists(csv_path):
+            print(f"⚠️ Không tìm thấy file dữ liệu: {csv_path}")
+            return {"majors": []}
+
         df = pd.read_csv(csv_path)
+
+        # Linh hoạt với tên cột
+        ma_col = 'ma_nganh_chuan' if 'ma_nganh_chuan' in df.columns else 'ma_nganh'
+        ten_col = 'ten_nganh_chuan' if 'ten_nganh_chuan' in df.columns else 'ten_nganh'
+
+        if ma_col not in df.columns or ten_col not in df.columns:
+            return {"majors": []}
+
+        # Lấy danh sách ngành duy nhất
+        majors = (df[[ma_col, ten_col]]
+                  .drop_duplicates(subset=[ma_col])
+                  .rename(columns={ma_col: 'ma_nganh', ten_col: 'ten_nganh'})
+                  .sort_values(by='ten_nganh'))
+
+        # Làm sạch dữ liệu
+        majors['ma_nganh'] = majors['ma_nganh'].astype(str).str.strip()
+        majors = majors[majors['ten_nganh'].str.strip() != '']
         
-        col_ma = 'ma_nganh_chuan' if 'ma_nganh_chuan' in df.columns else 'ma_nganh'
-        col_ten = 'ten_nganh_chuan' if 'ten_nganh_chuan' in df.columns else 'ten_nganh'
-        
-        # Đếm tần suất xuất hiện của mỗi cặp (mã, tên) trong toàn bộ dataset
-        # Tên nào xuất hiện nhiều nhất cho 1 mã ngành = tên chuẩn nhất
-        name_counts = df.groupby([col_ma, col_ten]).size().reset_index(name='count')
-        best_names = name_counts.sort_values([col_ma, 'count'], ascending=[True, False])
-        unique_majors = best_names.drop_duplicates(subset=[col_ma], keep='first')[[col_ma, col_ten]]
-        
-        # Rename cho frontend
-        unique_majors = unique_majors.rename(columns={col_ma: 'ma_nganh', col_ten: 'ten_nganh'})
-        
-        # Chuyển đổi thành string và lọc bỏ các dòng tên rỗng
-        unique_majors['ma_nganh'] = unique_majors['ma_nganh'].astype(str)
-        unique_majors = unique_majors.fillna('')
-        unique_majors = unique_majors[unique_majors['ten_nganh'].str.strip() != '']
-        
-        # Loại bỏ các tên ngành trùng lặp, giữ lại mã ngành phổ biến nhất
-        unique_majors = unique_majors.drop_duplicates(subset=['ten_nganh'], keep='first')
-        
-        # Sắp xếp theo tên ngành cho dễ tìm
-        unique_majors = unique_majors.sort_values(by="ten_nganh").to_dict('records')
-        return {"majors": unique_majors}
-    
-    return {"majors": []}
+        return {"majors": majors.to_dict('records')}
+
+    except Exception as e:
+        print(f"❌ Lỗi khi lấy danh sách majors: {e}")
+        return {"majors": []}

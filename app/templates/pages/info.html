@@ -1,0 +1,164 @@
+{% extends "base.html" %} {% block title %}Giải Đáp Thắc Mắc - Tư Vấn Tuyển Sinh
+AI 2026{% endblock %} {% block description %}Tìm kiếm nhanh thông tin các Sở
+GD&ĐT và Trường Đại học - Cao đẳng năm 2026{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="info-hero">
+  <div class="info-hero-overlay"></div>
+  <div class="info-hero-content">
+    <h1>Giải Đáp Thắc Mắc Tuyển Sinh</h1>
+    <p class="lead">
+      Tra cứu nhanh thông tin các Sở Giáo dục và Trường Đại học - Cao đẳng năm
+      2026
+    </p>
+  </div>
+</section>
+
+<section class="info-section">
+  <div class="container">
+    <div class="info-header">
+      <h2>Danh sách đơn vị tuyển sinh</h2>
+      <p>Hệ thống cập nhật liên tục thông tin chính thức năm 2026</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="info-tabs">
+      <div class="info-tab active" data-type="0">
+        <i class="fas fa-building"></i>
+        Sở Giáo dục & Đào tạo
+      </div>
+      <div class="info-tab" data-type="1">
+        <i class="fas fa-university"></i>
+        Trường Đại học - Cao đẳng
+      </div>
+    </div>
+
+    <!-- Search Box -->
+    <div class="info-search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Tìm theo mã đơn vị hoặc tên đơn vị..."
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+      <table class="info-table" id="info-table">
+        <thead>
+          <tr>
+            <th style="width: 70px">STT</th>
+            <th style="width: 120px">Mã đơn vị</th>
+            <th>Tên đơn vị</th>
+            <th style="width: 140px">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- No Result -->
+    <div id="no-result" class="no-result hidden">
+      <i class="fas fa-search"></i>
+      <p>Không tìm thấy kết quả phù hợp</p>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  const tabs = document.querySelectorAll(".info-tab");
+  const tableBody = document.getElementById("table-body");
+  const searchInput = document.getElementById("search-input");
+  const noResult = document.getElementById("no-result");
+
+  let currentData = [];
+
+  function renderTable(data) {
+    tableBody.innerHTML = "";
+
+    if (data.length === 0) {
+      noResult.classList.remove("hidden");
+      return;
+    } else {
+      noResult.classList.add("hidden");
+    }
+
+    data.forEach((item, index) => {
+      const row = `
+        <tr>
+          <td>${index + 1}</td>
+          <td><strong>${item.ma}</strong></td>
+          <td>${item.ten}</td>
+          <td>
+            <button class="btn-view" onclick="viewDetail('${item.ma}', '${
+        item.ten
+      }')">
+              <i class="fas fa-eye"></i> Xem
+            </button>
+          </td>
+        </tr>`;
+      tableBody.innerHTML += row;
+    });
+  }
+
+  // Tab switching
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      if (tab.dataset.type === "0") {
+        // Sở GD&ĐT
+        currentData = [
+          { ma: "SGD01", ten: "Sở GD&ĐT TP. Hồ Chí Minh" },
+          { ma: "SGD02", ten: "Sở GD&ĐT Hà Nội" },
+          { ma: "SGD03", ten: "Sở GD&ĐT Đà Nẵng" },
+          { ma: "SGD04", ten: "Sở GD&ĐT Hải Phòng" },
+          { ma: "SGD05", ten: "Sở GD&ĐT Cần Thơ" },
+        ];
+      } else {
+        // Trường Đại học - Cao đẳng
+        currentData = [
+          { ma: "BKA", ten: "Đại học Bách Khoa Hà Nội" },
+          { ma: "BACH", ten: "Đại học Bách Khoa TP. Hồ Chí Minh" },
+          { ma: "HCMUS", ten: "Đại học Khoa học Tự nhiên TP.HCM" },
+          { ma: "UEH", ten: "Đại học Kinh tế TP. Hồ Chí Minh" },
+          { ma: "FTU", ten: "Đại học Ngoại thương" },
+          { ma: "HUST", ten: "Đại học Bách Khoa Hà Nội" },
+        ];
+      }
+      renderTable(currentData);
+    });
+  });
+
+  // Search functionality
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase().trim();
+    const filtered = currentData.filter(
+      (item) =>
+        item.ma.toLowerCase().includes(keyword) ||
+        item.ten.toLowerCase().includes(keyword)
+    );
+    renderTable(filtered);
+  });
+
+  // Initial load
+  document.addEventListener("DOMContentLoaded", () => {
+    currentData = [
+      { ma: "SGD01", ten: "Sở GD&ĐT TP. Hồ Chí Minh" },
+      { ma: "BKA", ten: "Đại học Bách Khoa Hà Nội" },
+      { ma: "BACH", ten: "Đại học Bách Khoa TP. Hồ Chí Minh" },
+      { ma: "HCMUS", ten: "Đại học Khoa học Tự nhiên TP.HCM" },
+    ];
+    renderTable(currentData);
+  });
+
+  // View detail function
+  function viewDetail(ma, ten) {
+    alert(
+      `Đang xem chi tiết: ${ten} (${ma})\n\nThông tin sẽ được hiển thị chi tiết trong phiên bản đầy đủ.`
+    );
+  }
+</script>
+{% endblock %}

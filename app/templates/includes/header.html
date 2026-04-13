@@ -1,0 +1,35 @@
+<header class="main-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <div class="logo-icon">🎓</div>
+      <div class="logo-text">
+        Tư Vấn Tuyển Sinh <span class="logo-ai">AI</span>
+      </div>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+      <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}"
+        >Trang chủ</a
+      >
+      <a href="/about" class="nav-item">Giới thiệu</a>
+      <a href="/features" class="nav-item">Tính năng</a>
+      <a href="/info" class="nav-item">Giải đáp thắc mắc</a>
+      <a href="/contact" class="nav-item">Liên hệ</a>
+    </nav>
+
+    <!-- Right side actions -->
+    <div class="header-actions">
+      <a href="/#form-section" class="btn-start-consult">
+        <i class="fas fa-arrow-right"></i>
+        Bắt đầu tư vấn ngay
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>

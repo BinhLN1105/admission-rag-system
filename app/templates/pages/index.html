@@ -1,0 +1,180 @@
+{% extends "base.html" %} {% block title %}Hệ Thống Tư Vấn Tuyển Sinh AI 2026{%
+endblock %} {% block description %}Phân tích điểm thi THPT, tổ hợp xét tuyển và
+dự đoán cơ hội đậu đại học năm 2026 chính xác nhất{% endblock %} {% block
+content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Khám Phá Con Đường Đại Học Cùng AI</h1>
+    <p>
+      Phân tích điểm thi • Dự đoán xác suất đậu • Gợi ý ngành/trường phù hợp
+      nhất năm 2026
+    </p>
+    <a href="#form-section" class="btn-hero">Bắt Đầu Tư Vấn Miễn Phí</a>
+  </div>
+</section>
+
+<!-- Stats -->
+<section id="stats" class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>250+</h3>
+        <p>Trường Đại học & Cao đẳng</p>
+      </div>
+      <div class="stat-item">
+        <h3>1,850+</h3>
+        <p>Ngành học & Mã ngành</p>
+      </div>
+      <div class="stat-item">
+        <h3>15,000+</h3>
+        <p>Học sinh đã được tư vấn</p>
+      </div>
+      <div class="stat-item">
+        <h3>96%</h3>
+        <p>Phụ huynh hài lòng</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ngành Học Hot 2026 -->
+<section class="hot-majors-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔥 Ngành Học Hot Nhất Năm 2026</h2>
+      <p>Dự báo xu hướng tuyển sinh và việc làm có nhu cầu cao nhất</p>
+    </div>
+
+    <div class="majors-grid">
+      <div class="major-card">
+        <div class="major-icon">💻</div>
+        <h3>Công nghệ Thông tin</h3>
+        <p>AI, Phần mềm, An ninh mạng, Data Science</p>
+        <span class="demand">Nhu cầu cao ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn ngành CNTT</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">💰</div>
+        <h3>Kinh tế - Quản trị</h3>
+        <p>Quản trị Kinh doanh, Tài chính, Marketing, Logistics</p>
+        <span class="demand">Nhu cầu cao ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Kinh tế</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">🩺</div>
+        <h3>Y khoa - Dược học</h3>
+        <p>Y đa khoa, Răng Hàm Mặt, Dược, Điều dưỡng</p>
+        <span class="demand">Nhu cầu rất cao ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn ngành Y Dược</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">⚙️</div>
+        <h3>Kỹ thuật - Công nghệ</h3>
+        <p>Cơ khí, Điện điện tử, Ô tô, Xây dựng</p>
+        <span class="demand">Nhu cầu cao ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Kỹ thuật</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">📱</div>
+        <h3>Digital Marketing</h3>
+        <p>Content Creator, Social Media, E-commerce</p>
+        <span class="demand">Xu hướng mạnh ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn Marketing</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">🌾</div>
+        <h3>Nông nghiệp Công nghệ cao</h3>
+        <p>Công nghệ Sinh học, Thực phẩm, Môi trường</p>
+        <span class="demand">Tương lai ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Nông nghiệp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form Tư Vấn -->
+<section id="form-section" class="container section">
+  <div class="form-card">
+    <h2 class="form-title">🔍 Nhập thông tin để AI tư vấn ngay</h2>
+
+    <div class="form-group">
+      <label>Điểm thi THPT (theo tổ hợp):</label>
+      <input
+        type="number"
+        id="diem_thi"
+        step="0.01"
+        min="0"
+        max="30"
+        placeholder="Ví dụ: 26.50"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Khu vực ưu tiên:</label>
+      <select id="khu_vuc" required>
+        <option value="KV3">KV3 (Không ưu tiên)</option>
+        <option value="KV2">KV2 (+0.5 điểm)</option>
+        <option value="KV2NT">KV2-NT (+0.25 điểm)</option>
+        <option value="KV1">KV1 (+0.75 điểm)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tổ hợp xét tuyển:</label>
+      <select id="to_hop" required>
+        <option value="A00">A00 (Toán - Lý - Hóa)</option>
+        <option value="A01">A01 (Toán - Lý - Anh)</option>
+        <option value="B00">B00 (Toán - Hóa - Sinh)</option>
+        <option value="D01">D01 (Toán - Văn - Anh)</option>
+        <option value="D07">D07 (Toán - Hóa - Anh)</option>
+        <option value="C00">C00 (Văn - Sử - Địa)</option>
+      </select>
+    </div>
+
+    <div class="form-group custom-dropdown-container">
+      <label>Ngành/Mã ngành quan tâm:</label>
+      <input
+        type="text"
+        id="ma_nganh"
+        autocomplete="off"
+        placeholder="Gõ để tìm kiếm ngành hoặc mã ngành..."
+        required
+      />
+      <div id="majors_dropdown" class="custom-dropdown-list"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Câu hỏi chi tiết (tùy chọn):</label>
+      <textarea
+        id="query"
+        rows="3"
+        placeholder="Ví dụ: Với 26.5 điểm A00 KV2, mình có khả năng đậu CNTT ĐH Bách Khoa TP.HCM không?"
+      ></textarea>
+    </div>
+
+    <button id="btn-submit" onclick="hoiDap()" class="btn-primary btn-large">
+      <i class="fas fa-brain"></i> Khám Phá Cơ Hội Của Tôi
+    </button>
+  </div>
+
+  <!-- Kết quả -->
+  <div class="result-card" id="result-card" style="display: none">
+    <h3>🤖 Kết quả tư vấn từ AI:</h3>
+    <div id="loading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin fa-3x"></i>
+      <p>Đang phân tích dữ liệu điểm chuẩn 2020-2025...</p>
+    </div>
+    <div id="result-content" class="markdown-body"></div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script src="/static/js/app.js?v=2026"></script>
+{% endblock %}
