@@ -1,0 +1,124 @@
+/* ====================== FOOTER.CSS - PHIÊN BẢN TỐI ƯU ====================== */
+
+.main-footer {
+  background: #1e2937;
+  color: #cbd5e1;
+  padding: 90px 0 50px;
+  margin-top: 80px;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Grid Layout */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 52px;
+  margin-bottom: 60px;
+}
+
+.footer-col h3 {
+  color: white;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.footer-col h3::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  background: var(--accent);
+  bottom: -8px;
+  left: 0;
+  border-radius: 3px;
+}
+
+/* Nội dung */
+.footer-col p {
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.footer-col i {
+  width: 20px;
+  margin-right: 10px;
+  color: var(--accent);
+}
+
+/* Danh sách link */
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: white;
+  padding-left: 4px;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid #334155;
+  padding-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  color: #94a3b8;
+  font-size: 0.98rem;
+}
+
+.footer-bottom strong {
+  color: #e0f2fe;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 18px;
+}
+
+.social-links a {
+  color: #cbd5e1;
+  font-size: 1.55rem;
+  transition: var(--transition);
+}
+
+.social-links a:hover {
+  color: var(--accent);
+  transform: translateY(-4px);
+}
+
+/* ====================== RESPONSIVE ====================== */
+@media (max-width: 768px) {
+  .footer-grid {
+    gap: 40px;
+  }
+
+  .main-footer {
+    padding: 70px 0 40px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+}

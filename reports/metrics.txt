@@ -1,5 +1,5 @@
 === BÁO CÁO ĐÁNH GIÁ MÔ HÌNH ===
-Thời gian: 2026-04-06 19:07:43.453910
+Thời gian: 2026-04-14 17:36:03.039047
 
 1. LOGISTIC REGRESSION:
    Accuracy: 0.8017

@@ -1,16 +1,53 @@
-# Hệ Thống Tư Vấn Tuyển Sinh Thông Minh (RAG + ML)
+<div align="center">
+  <h1>🎓 Hệ Thống Tư Vấn Tuyển Sinh Thông Minh (AI & RAG)</h1>
+  <p>Dự án ứng dụng Trí tuệ Nhân tạo để dự đoán xác suất trúng tuyển Đại học, kết hợp Hệ chuyên gia truy xuất (RAG) cung cấp thông tin ngành nghề chuyên sâu.</p>
 
-Dự án phát triển hệ thống hỗ trợ tư vấn tuyển sinh đại học, kết hợp sức mạnh của **Machine Learning** (dự đoán xác suất) và **RAG - Retrieval-Augmented Generation** (cung cấp thông tin chi tiết). Hệ thống sử dụng dữ liệu điểm chuẩn thực tế giai đoạn 2023-2025.
+  [![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)](https://www.python.org/)
+  [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-00a393?logo=fastapi)](https://fastapi.tiangolo.com/)
+  [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.3+-F7931E?logo=scikit-learn)](https://scikit-learn.org/)
+  [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Store-FF6B6B)](https://www.trychroma.com/)
+</div>
 
 ---
 
-## 🚀 Các Tính Năng Chính
+## 🌟 Chức Năng Nổi Bật
 
-- **Dự đoán trúng tuyển (ML)**: Sử dụng mô hình Ensemble (Random Forest + Logistic Regression) để tính toán xác suất dựa trên điểm thi, khu vực ưu tiên và xu hướng điểm chuẩn 3 năm.
-- **Tư vấn thông minh (RAG)**: Tìm kiếm và trả lời các câu hỏi về ngành nghề, học phí, và thông tin trường dựa trên cơ sở dữ liệu vector (ChromaDB).
-- **Chuẩn hóa Mã ngành**: Tự động ánh xạ các mã ngành cũ/biến thể về mã chuẩn 7 chữ số của Bộ GD&ĐT (đầu số 7) để đảm bảo tra cứu chính xác xuyên suốt các năm.
-- **Điểm ưu tiên Động**: Tự động tải và áp dụng điểm cộng khu vực từ file cấu hình `data/raw/uu_tien.csv`.
-- **Giao diện Autocomplete**: Danh sách chọn ngành đã được làm sạch, mỗi mã ngành chỉ hiển thị một tên gọi chuẩn nhất, giúp người dùng dễ dàng tìm kiếm.
+- **Dự đoán Trúng tuyển (Machine Learning)**: Sử dụng mô hình Machine Learning Ensemble (kết hợp **Random Forest** và **Logistic Regression**) để phân tích điểm thi, khu vực ưu tiên và điểm chuẩn lịch sử (2023-2025), đưa ra % tỷ lệ đỗ chính xác.
+- **Trợ lý Ảo Tư Vấn (RAG)**: Chatbot thông minh tự động trích xuất thông tin (Mã trường, Ngành, Điểm) để tìm kiếm và giải đáp bằng tiếng Việt tự nhiên thông qua cơ sở dữ liệu Vector (ChromaDB).
+- **Chuẩn hóa Thông tin Tự động**: Tự động nhận diện và nội suy các điểm số bị thiếu, quy chuẩn mọi mã ngành địa phương về mã chuẩn 7 số của Bộ GD&ĐT.
+- **Hệ thống Điểm Ưu Tiên Động**: Có file cấu hình độc lập để tự động tính điểm cộng Khu Vực.
+
+---
+
+## 🤖 Kiến Trúc Mô Hình AI (Model Architecture)
+
+Hệ thống đóng vai trò như một chuyên gia tư vấn tuyển sinh ảo. Ở tầng Machine Learning, mô hình Ensemble khai thác các "luật" ngầm từ dữ liệu lịch sử để phán đoán. Dưới đây là phân tích chi tiết hiệu năng mô hình trên tập kiểm thử (Test Set).
+
+### 1. Yếu Tố Quyết Định (Feature Importance)
+Biểu đồ dưới đây minh họa cách mô hình Random Forest đánh giá mức độ quan trọng của các yếu tố đầu vào.
+<div align="center">
+  <img src="images/feature_importance.png" alt="Feature Importance" width="800">
+</div>
+
+> **Phân tích:** Mô hình chú trọng lớn nhất vào **Chênh lệch điểm** (giữa điểm thi có cộng ưu tiên của thí sinh và điểm chuẩn gần nhất). Các yếu tố bổ trợ bao gồm *Xu hướng thay đổi điểm (2024-2025)* và *Trung bình điểm 3 năm*, giúp mô hình không bị "mù" khi điểm chuẩn một năm bị biến động bất thường.
+
+### 2. Độ Chính Xác Thực Tế (Confusion Matrix)
+Ma trận nhầm lẫn giúp kiểm chứng xem AI có hay bị dự đoán "ảo" hay không.
+<div align="center">
+  <img src="images/confusion_matrix.png" alt="Confusion Matrix" width="600">
+</div>
+
+> **Phân tích:** Mô hình Random Forest có độ chuẩn xác rất cao, dự đoán sai rất ít trường hợp thí sinh rớt thành đậu. Điều này vô cùng quan trọng đối với một hệ thống tư vấn giáo dục: *Thà dự đoán an toàn (khuyên nhủ dự phòng) còn hơn dự đoán đỗ nhưng thực tế lại trượt*.
+
+### 3. Khả Năng Phân Loại (ROC Curve)
+Đường cong ROC so sánh hai thuật toán Machine Learning được triển khai.
+<div align="center">
+  <img src="images/roc_curve.png" alt="ROC Curve" width="600">
+</div>
+
+> **Phân tích:** Cả Random Forest (AUC = 0.929) và Logistic Regression (AUC = 0.870) đều thể hiện sức mạnh phân loại xuất sắc. Hệ thống cuối cùng kết hợp mức trung bình có trọng số của cả hai để vừa giữ được khả năng phi tuyến tính của Cây Quyết Định (Trees), vừa bám sát xác suất tuyến tính của Logistic.
+
+---
 
 ## 📂 Cấu Trúc Dự Án
 
@@ -36,6 +73,9 @@ Project_AI/
 ## 🛠️ Hướng Dẫn Cài Đặt
 
 **1. Cài đặt môi trường**
+> [!IMPORTANT]
+> Yêu cầu **Python 3.12** để đảm bảo tính tương thích với các thư viện Scikit-Learn và ChromaDB.
+
 ```bash
 # Tạo môi trường ảo (Khuyến nghị)
 python -m venv venv
@@ -58,30 +98,19 @@ python src/data_processing/generate_synthetic.py
 # 3. Huấn luyện mô hình AI
 python src/ml_model/train.py
 
-# 4. Xây dựng chỉ mục tìm kiếm RAG
+# 3. Khởi tạo kho lưu trữ ngữ nghĩa RAG (Vector DB)
 python src/rag/build_index.py
 ```
 
-**3. Khởi chạy ứng dụng**
+**3. Khởi Chạy Server**
 ```bash
-python app/main.py
+python -m app.main
 ```
 Hoặc có thể dùng lệnh sau để chạy với uvicorn:
 ```bash
 uvicorn app.main:app --reload
 ```
 Truy cập: `http://localhost:8000`
-
-## 📊 Hiệu năng mô hình
-
-Sau khi huấn luyện, bạn có thể kiểm tra hiệu năng của mô hình qua các biểu đồ trực quan trong thư mục `reports/figures/`:
-
-| Tầm quan trọng của yếu tố | Ma trận nhầm lẫn (Confusion Matrix) |
-| :---: | :---: |
-| ![Feature Importance](reports/figures/feature_importance.png) | ![Confusion Matrix](reports/figures/confusion_matrix.png) |
-
-> [!NOTE]
-> Các biểu đồ này giúp bạn hiểu tại sao AI đưa ra quyết định (Feature Importance) và tỉ lệ dự đoán chính xác thực tế trên tập dữ liệu kiểm tra (Confusion Matrix).
 
 ---
 
@@ -103,4 +132,5 @@ Sau khi huấn luyện, bạn có thể kiểm tra hiệu năng của mô hình 
 - **Duy nhất Mã ngành**: Trong `src/data_processing/merge_data.py`, danh mục `COMMON_MAJOR_MAP` chứa các quy tắc ép mã ngành về đầu số 7 chuẩn hóa.
 
 ---
-*Dự án được tối ưu hóa cho dữ liệu tuyển sinh Việt Nam giai đoạn 2023-2025.*
+*Dự án được huấn luyện trên khối lượng dữ liệu lịch sử 2023-2025, được thiết kế và tinh chỉnh để sẵn sàng phục vụ kỳ thi THPT Quốc gia 2026.*
+

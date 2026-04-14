@@ -10,3 +10,10 @@ class InferenceRequest(BaseModel):
 
 class InferenceResponse(BaseModel):
     ket_qua: str
+
+# Schema riêng cho Chatbot (không cần form data, chỉ cần câu hỏi tự do)
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    reply: str
