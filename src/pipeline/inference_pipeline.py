@@ -207,13 +207,17 @@ class InferencePipeline:
             context = self.retriever.retrieve(query=f"{query} {ma_truong}", top_k=2)
             return f"⚠️ **Thông báo:** Rất tiếc, trường **{ma_truong}** không tuyển sinh ngành có mã **{ma_nganh}** cho bất kỳ tổ hợp môn nào.{similar_majors_msg}\n\nThông tin tham khảo từ RAG:\n{context}"
 
-        # 2. Nếu có ngành nhưng không có tổ hợp môn yêu cầu
+        # 2. Nếu có ngành nhưng không có tổ hợp môn yêu cầu -> dừng lại, báo ngay
         school_majors = school_any_tohop[school_any_tohop["ma_to_hop"].astype(str) == str(to_hop)]
-        fallback_note = ""
         if school_majors.empty:
             available_tohops = school_any_tohop["ma_to_hop"].unique().tolist()
-            fallback_note = f"\n\n⚠️ **Lưu ý:** Trường **{ma_truong}** không xét khối **{to_hop}** cho ngành này. Các khối có sẵn: **{', '.join(available_tohops)}**. Dự đoán dưới đây dựa trên dữ liệu tổng hợp các khối có sẵn."
-            school_majors = school_any_tohop
+            ten_truong_display = school_any_tohop["ten_truong"].iloc[0] if not school_any_tohop.empty else ma_truong
+            return (
+                f"⚠️ **Thông báo:** Trường **{ten_truong_display}** ({ma_truong}) **không xét tuyển khối {to_hop}** "
+                f"cho ngành mã **{ma_nganh}** trong dữ liệu hiện có.\n\n"
+                f"📋 **Các khối xét tuyển ngành này tại trường:** `{'`, `'.join(available_tohops)}`\n\n"
+                f"👉 Bạn hãy chọn lại tổ hợp môn phù hợp ở trên và thử lại nhé!"
+            )
 
         # Bước 3: RAG
         context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, to_hop=to_hop, ma_truong=ma_truong, top_k=2)
@@ -236,9 +240,15 @@ class InferencePipeline:
         dc_2024 = school_majors["diem_chuan_2024"].mean()
         dc_2025 = school_majors["diem_chuan_2025"].mean()
         
-        if pd.isna(dc_2023): dc_2023 = dc_2025 if not pd.isna(dc_2025) else 25.0
-        if pd.isna(dc_2024): dc_2024 = dc_2025 if not pd.isna(dc_2025) else 25.0
-        if pd.isna(dc_2025): dc_2025 = dc_2024 if not pd.isna(dc_2024) else 25.0
+        # Xử lý các trường hợp NaN hoặc điểm = 0.0 (chưa có dữ liệu năm đó)
+        if pd.isna(dc_2025) or dc_2025 <= 0: 
+            dc_2025 = dc_2024 if (not pd.isna(dc_2024) and dc_2024 > 0) else 25.0
+            
+        if pd.isna(dc_2024) or dc_2024 <= 0: 
+            dc_2024 = dc_2025 if (not pd.isna(dc_2025) and dc_2025 > 0) else 25.0
+            
+        if pd.isna(dc_2023) or dc_2023 <= 0: 
+            dc_2023 = dc_2024 if (not pd.isna(dc_2024) and dc_2024 > 0) else 25.0
 
         max_dc = max([dc_2023, dc_2024, dc_2025])
         if diem <= 31 and max_dc > 35:
@@ -257,21 +267,21 @@ class InferencePipeline:
         danh_gia = ml_res["danh_gia"]
 
         # Bước 5: Tổng hợp response
-        prompt = f"""Bạn là một chuyên gia tư vấn tuyển sinh đại học nhiệt tình và thân thiện.
-        Dựa vào kết quả tìm kiếm (RAG):
-        {context}
-        
-        Và kết quả dự đoán (Machine Learning):
-        - Điểm thi thí sinh (đã cộng ưu tiên khu vực): {ml_res['diem_co_uu_tien']}
-        - Cơ hội trúng tuyển: {prob_str}
-        - Lời khuyên: {danh_gia}
-        
-        Câu hỏi của thí sinh: {query}
-        
-        Hãy viết câu trả lời kết hợp thông tin trên một cách tự nhiên, súc tích (khoảng 3-4 câu).
-        """
+        ten_truong = school_majors["ten_truong"].iloc[0] if not school_majors.empty else ma_truong
+        ten_nganh = school_majors["ten_nganh_chuan"].iloc[0] if "ten_nganh_chuan" in school_majors.columns else ma_nganh
 
-        response = f"Theo thông tin tìm thấy:\n{context}\n\nVới điểm số {diem} (cộng ưu tiên KV {khu_vuc} thành {ml_res['diem_co_uu_tien']}), xác suất trúng tuyển tính toán bởi **Mô hình Ensemble (AI)** là **{prob_str}** ({danh_gia}).{fallback_note}{disclaimer_note}\n\n[PROMPT LLM MẪU]:\n{prompt}"
+        response = (
+            f"### 📊 Kết quả tư vấn: {ten_truong}\n"
+            f"**Ngành:** {ten_nganh} | **Tổ hợp:** {to_hop} | **Khu vực:** {khu_vuc}\n\n"
+            f"---\n"
+            f"{context}\n\n"
+            f"---\n"
+            f"### 🤖 Dự đoán từ AI\n"
+            f"- **Điểm của bạn** (sau cộng ưu tiên KV): **{ml_res['diem_co_uu_tien']}**\n"
+            f"- **Xác suất trúng tuyển:** **{prob_str}**\n"
+            f"- **Đánh giá:** {danh_gia}"
+            f"{disclaimer_note}"
+        )
         return response
 
     def _auto_recommend_top_3(self, ma_nganh: str, to_hop: str, diem: float, khu_vuc: str) -> str:

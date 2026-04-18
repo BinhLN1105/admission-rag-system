@@ -104,37 +104,72 @@ def train():
         bar = "█" * int(imp * 40)
         print(f"   {feat:<22} {bar} {imp:.4f}")
 
-    # 5. Xuất báo cáo & Vẽ biểu đồ (Tùy chọn)
-    export_report = input("\n📊 Bạn có muốn xuất báo cáo và biểu đồ hiệu năng vào thư mục reports không? (y/n): ").lower().strip() == 'y'
+    # 5. Xuất báo cáo & Vẽ biểu đồ (Tự động phục vụ Documentation)
+    print(f"   Đang tạo báo cáo trong {REPORTS_DIR}...")
     
-    if export_report:
-        print(f"   Đang tạo báo cáo trong {REPORTS_DIR}...")
-        
-        # ── 5a. Feature Importance Plot ──────────────────────────────
-        plt.figure(figsize=(10, 6))
-        sns.barplot(x=fi.values, y=fi.index, palette="viridis")
-        plt.title("Tầm quan trọng của các yếu tố (Random Forest)")
-        plt.xlabel("Mức độ ảnh hưởng")
-        plt.ylabel("Yếu tố")
-        plt.tight_layout()
-        plt.savefig(os.path.join(FIGURES_DIR, "feature_importance.png"))
-        plt.close()
+    # Thiết lập phong cách báo cáo (Gu thẩm mỹ chuyên nghiệp)
+    sns.set_theme(style="white") # Bỏ gridlines rối rắm
+    plt.rc('font', size=12)
+    plt.rc('axes', titlesize=14, labelsize=12)
 
-        # ── 5b. Confusion Matrix Plot (Best Model) ────────────────────
-        best_model_name = "Random Forest" if auc_rf >= auc_lr else "Logistic Regression"
-        y_test_best = y_test
-        y_pred_best = y_pred_rf if best_model_name == "Random Forest" else y_pred_lr
-        
-        plt.figure(figsize=(8, 6))
-        cm = confusion_matrix(y_test_best, y_pred_best)
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
-                    xticklabels=['Trượt', 'Đỗ'], yticklabels=['Trượt', 'Đỗ'])
-        plt.title(f"Confusion Matrix - {best_model_name}")
-        plt.ylabel('Thực tế')
-        plt.xlabel('Dự đoán')
-        plt.tight_layout()
-        plt.savefig(os.path.join(FIGURES_DIR, "confusion_matrix.png"))
-        plt.close()
+    # ── 5a. Feature Importance Plot ──────────────────────────────
+    plt.figure(figsize=(10, 6))
+    
+    # Custom Palette: Đỏ đậm cho top 1, Xám nhạt cho các ô còn lại
+    custom_palette = ["#B22222"] + ["#A9A9A9"] * (len(fi) - 1)
+    ax = sns.barplot(x=fi.values, y=fi.index, palette=custom_palette)
+    
+    plt.title("Mức Độ Quan Trọng Của Các Yếu Tố (Feature Importance)", pad=15, fontweight='bold')
+    plt.xlabel("Trọng số ảnh hưởng (Importance Score)")
+    plt.ylabel("")
+    
+    # Bỏ viền thừa (spines)
+    sns.despine(left=True, bottom=True)
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGURES_DIR, "feature_importance.png"), dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # ── 5b. Confusion Matrix Plot (Best Model) ────────────────────
+    best_model_name = "Random Forest" if auc_rf >= auc_lr else "Logistic Regression"
+    y_test_best = y_test
+    y_pred_best = y_pred_rf if best_model_name == "Random Forest" else y_pred_lr
+    
+    plt.figure(figsize=(7, 5))
+    cm = confusion_matrix(y_test_best, y_pred_best)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=['Rớt', 'Đỗ'], yticklabels=['Rớt', 'Đỗ'],
+                annot_kws={"size": 16, "weight": "bold"})
+    plt.title(f"Ma Trận Nhầm Lẫn (Confusion Matrix) - {best_model_name}", pad=15, fontweight='bold')
+    plt.ylabel('Thực tế (Actual)')
+    plt.xlabel('Dự đoán (Predicted)')
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGURES_DIR, "confusion_matrix.png"), dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # ── 5c. ROC Curve Plot ───────────────────────────────────────
+    from sklearn.metrics import roc_curve
+    plt.figure(figsize=(7, 6))
+    
+    # Tính toán ROC cho cả 2 model
+    fpr_rf, tpr_rf, _ = roc_curve(y_test, y_prob_rf)
+    fpr_lr, tpr_lr, _ = roc_curve(y_test, y_prob_lr)
+    
+    plt.plot(fpr_rf, tpr_rf, color='#B22222', lw=2.5, label=f'Random Forest (AUC = {auc_rf:.3f})')
+    plt.plot(fpr_lr, tpr_lr, color='#4682B4', lw=2, linestyle='--', label=f'Logistic Regression (AUC = {auc_lr:.3f})')
+    plt.plot([0, 1], [0, 1], color='gray', lw=1.5, linestyle=':')
+    
+    plt.title("Đường Cong ROC (Receiver Operating Characteristic)", pad=15, fontweight='bold')
+    plt.xlabel('Tỷ lệ Dương tính Giả (False Positive Rate)')
+    plt.ylabel('Tỷ lệ Dương tính Thật (True Positive Rate)')
+    plt.legend(loc="lower right", frameon=False)
+    
+    sns.despine()
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGURES_DIR, "roc_curve.png"), dpi=300, bbox_inches='tight')
+    plt.close()
+
+    export_report = True
+    if export_report:
 
         # ── 5c. Export Metrics Text ──────────────────────────────────
         with open(os.path.join(REPORTS_DIR, "metrics.txt"), "w", encoding="utf-8") as f:

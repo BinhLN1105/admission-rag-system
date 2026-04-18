@@ -1,0 +1,226 @@
+{% extends "base.html" %} {% block title %}Liên Hệ - Tư Vấn Tuyển Sinh AI 2026{%
+endblock %} {% block description %}Liên hệ với đội ngũ Tư Vấn Tuyển Sinh AI - Hỗ
+trợ nhanh chóng qua email, hotline và form trực tuyến{% endblock %} {% block
+content %}
+<!-- Hero Section -->
+<section class="contact-hero">
+  <div class="contact-hero-overlay"></div>
+  <div class="contact-hero-content">
+    <h1>Liên Hệ Với Chúng Tôi</h1>
+    <p class="lead">
+      Chúng tôi luôn sẵn sàng hỗ trợ bạn trong hành trình chọn ngành - chọn
+      trường năm 2026
+    </p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Cột trái: Thông tin liên hệ -->
+      <div class="contact-info">
+        <h2>Thông Tin Liên Hệ</h2>
+
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <strong>Địa chỉ</strong>
+            <p>TP. Hồ Chí Minh, Việt Nam</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <strong>Email</strong>
+            <p><a href="mailto:huyenbtth@gmail.com">huyenbtth@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <strong>Hotline</strong>
+            <p><a href="tel:0123456789">0123 456 789</a></p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-clock"></i>
+          <div>
+            <strong>Thời gian hỗ trợ</strong>
+            <p>Thứ 2 - Chủ Nhật: 8:00 - 22:00</p>
+          </div>
+        </div>
+
+        <div class="social-contact">
+          <p><strong>Theo dõi chúng tôi:</strong></p>
+          <div class="social-links">
+            <a
+              href="#"
+              target="_blank"
+              aria-label="Facebook"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #f1f1f1;
+                color: #333;
+                text-decoration: none;
+              "
+            >
+              <i class="fab fa-facebook-f" style="font-size: 18px"></i>
+            </a>
+
+            <a
+              href="https://zalo.me/yourphone"
+              target="_blank"
+              aria-label="Zalo"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #f1f1f1;
+              "
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
+                alt="Zalo"
+                style="width: 18px; height: 18px"
+              />
+            </a>
+
+            <a
+              href="#"
+              target="_blank"
+              aria-label="Instagram"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #f1f1f1;
+                color: #333;
+                text-decoration: none;
+              "
+            >
+              <i class="fab fa-instagram" style="font-size: 18px"></i>
+            </a>
+
+            <a
+              href="#"
+              target="_blank"
+              aria-label="Tiktok"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #f1f1f1;
+                color: #333;
+                text-decoration: none;
+              "
+            >
+              <i class="fab fa-tiktok" style="font-size: 18px"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột phải: Form liên hệ -->
+      <div class="contact-form">
+        <h2>Gửi Tin Nhắn Cho Chúng Tôi</h2>
+        <p class="form-subtitle">Chúng tôi sẽ phản hồi trong vòng 24 giờ</p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label>Họ và tên <span class="required">*</span></label>
+            <input
+              type="text"
+              id="fullname"
+              placeholder="Nhập họ và tên"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input
+              type="email"
+              id="email"
+              placeholder="example@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="tel" id="phone" placeholder="0123 456 789" />
+          </div>
+
+          <div class="form-group">
+            <label>Nội dung tin nhắn <span class="required">*</span></label>
+            <textarea
+              id="message"
+              rows="6"
+              placeholder="Ví dụ: Em muốn tư vấn về ngành Công nghệ Thông tin với 25 điểm khối A..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary btn-large" id="submit-btn">
+            <i class="fas fa-paper-plane"></i> Gửi Tin Nhắn
+          </button>
+        </form>
+
+        <div id="success-message" class="success-message hidden">
+          <i class="fas fa-check-circle"></i>
+          <h3>Cảm ơn bạn!</h3>
+          <p>
+            Tin nhắn đã được gửi thành công. Chúng tôi sẽ liên hệ lại sớm nhất.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  const contactForm = document.getElementById("contact-form");
+  const successMessage = document.getElementById("success-message");
+  const submitBtn = document.getElementById("submit-btn");
+
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Disable button và hiển thị loading
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+    submitBtn.disabled = true;
+
+    // Giả lập gửi form (thay bằng fetch API sau khi có backend)
+    setTimeout(() => {
+      contactForm.classList.add("hidden");
+      successMessage.classList.remove("hidden");
+
+      // Reset form sau 5 giây
+      setTimeout(() => {
+        contactForm.reset();
+        contactForm.classList.remove("hidden");
+        successMessage.classList.add("hidden");
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi Tin Nhắn';
+        submitBtn.disabled = false;
+      }, 5000);
+    }, 1200);
+  });
+</script>
+{% endblock %}

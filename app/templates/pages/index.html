@@ -1,0 +1,222 @@
+{% extends "base.html" %} {% block title %}Hệ Thống Tư Vấn Tuyển Sinh AI 2026{%
+endblock %} {% block description %}Phân tích điểm thi THPT, tổ hợp xét tuyển và
+dự đoán cơ hội đậu đại học năm 2026 chính xác nhất{% endblock %} {% block
+content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Khám Phá Con Đường Đại Học Cùng AI</h1>
+    <p>
+      Phân tích điểm thi • Dự đoán xác suất đậu • Gợi ý ngành/trường phù hợp
+      nhất năm 2026
+    </p>
+    <a href="#form-section" class="btn-hero">Bắt Đầu Tư Vấn Miễn Phí</a>
+  </div>
+</section>
+
+<!-- Stats -->
+<section id="stats" class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>250+</h3>
+        <p>Trường Đại học & Cao đẳng</p>
+      </div>
+      <div class="stat-item">
+        <h3>1,850+</h3>
+        <p>Ngành học & Mã ngành</p>
+      </div>
+      <div class="stat-item">
+        <h3>15,000+</h3>
+        <p>Học sinh đã được tư vấn</p>
+      </div>
+      <div class="stat-item">
+        <h3>96%</h3>
+        <p>Phụ huynh hài lòng</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ngành Học Hot 2026 -->
+<section class="hot-majors-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔥 Ngành Học Hot Nhất Năm 2026</h2>
+      <p>Dự báo xu hướng tuyển sinh và việc làm có nhu cầu cao nhất</p>
+    </div>
+
+    <div class="majors-grid">
+      <div class="major-card">
+        <div class="major-icon">💻</div>
+        <h3>Công nghệ Thông tin</h3>
+        <p>AI, Phần mềm, An ninh mạng, Data Science</p>
+        <span class="demand">Nhu cầu cao ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn ngành CNTT</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">💰</div>
+        <h3>Kinh tế - Quản trị</h3>
+        <p>Quản trị Kinh doanh, Tài chính, Marketing, Logistics</p>
+        <span class="demand">Nhu cầu cao ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Kinh tế</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">🩺</div>
+        <h3>Y khoa - Dược học</h3>
+        <p>Y đa khoa, Răng Hàm Mặt, Dược, Điều dưỡng</p>
+        <span class="demand">Nhu cầu rất cao ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn ngành Y Dược</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">⚙️</div>
+        <h3>Kỹ thuật - Công nghệ</h3>
+        <p>Cơ khí, Điện điện tử, Ô tô, Xây dựng</p>
+        <span class="demand">Nhu cầu cao ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Kỹ thuật</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">📱</div>
+        <h3>Digital Marketing</h3>
+        <p>Content Creator, Social Media, E-commerce</p>
+        <span class="demand">Xu hướng mạnh ★★★★★</span>
+        <a href="#" class="btn-major">Tư vấn Marketing</a>
+      </div>
+
+      <div class="major-card">
+        <div class="major-icon">🌾</div>
+        <h3>Nông nghiệp Công nghệ cao</h3>
+        <p>Công nghệ Sinh học, Thực phẩm, Môi trường</p>
+        <span class="demand">Tương lai ★★★★☆</span>
+        <a href="#" class="btn-major">Tư vấn ngành Nông nghiệp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form Tư Vấn -->
+<section id="form-section" class="container section">
+  <div class="form-card">
+    <h2 class="form-title">🔍 Nhập thông tin để AI tư vấn ngay</h2>
+
+    <div class="form-group">
+      <label>Điểm thi THPT (theo tổ hợp):</label>
+      <input
+        type="number"
+        id="diem_thi"
+        step="0.01"
+        min="0"
+        max="30"
+        placeholder="Ví dụ: 26.50"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Khu vực ưu tiên:</label>
+      <select id="khu_vuc" required>
+        <option value="KV3">KV3 (Không ưu tiên)</option>
+        <option value="KV2">KV2 (+0.5 điểm)</option>
+        <option value="KV2NT">KV2-NT (+0.25 điểm)</option>
+        <option value="KV1">KV1 (+0.75 điểm)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tổ hợp xét tuyển:</label>
+      <select id="to_hop" required>
+        <optgroup label="Khối A — Toán, Vật lý">
+          <option value="A00">A00 — Toán, Vật lý, Hóa học</option>
+          <option value="A01">A01 — Toán, Vật lý, Tiếng Anh</option>
+          <option value="A02">A02 — Toán, Vật lý, Sinh học</option>
+          <option value="A03">A03 — Toán, Vật lý, Lịch sử</option>
+          <option value="A04">A04 — Toán, Vật lý, Địa lý</option>
+          <option value="A05">A05 — Toán, Hóa học, Lịch sử</option>
+          <option value="A06">A06 — Toán, Hóa học, Địa lý</option>
+          <option value="A07">A07 — Toán, Lịch sử, Địa lý</option>
+        </optgroup>
+        <optgroup label="Khối B — Toán, Sinh học">
+          <option value="B00">B00 — Toán, Hóa học, Sinh học</option>
+          <option value="B01">B01 — Toán, Sinh học, Lịch sử</option>
+          <option value="B02">B02 — Toán, Sinh học, Địa lý</option>
+          <option value="B03">B03 — Toán, Sinh học, Văn</option>
+          <option value="B04">B04 — Toán, Sinh học, GDCD</option>
+          <option value="B08">B08 — Toán, Sinh học, Tiếng Anh</option>
+        </optgroup>
+        <optgroup label="Khối C — Văn, Xã hội">
+          <option value="C00">C00 — Văn, Lịch sử, Địa lý</option>
+          <option value="C01">C01 — Văn, Toán, Vật lý</option>
+          <option value="C02">C02 — Văn, Toán, Hóa học</option>
+          <option value="C03">C03 — Văn, Toán, Lịch sử</option>
+          <option value="C04">C04 — Văn, Toán, Địa lý</option>
+          <option value="C05">C05 — Văn, Vật lý, Hóa học</option>
+          <option value="C06">C06 — Văn, Vật lý, Sinh học</option>
+          <option value="C07">C07 — Văn, Vật lý, Lịch sử</option>
+          <option value="C08">C08 — Văn, Hóa học, Sinh học</option>
+          <option value="C09">C09 — Văn, Vật lý, Địa lý</option>
+          <option value="C10">C10 — Văn, Hóa học, Lịch sử</option>
+          <option value="C12">C12 — Văn, Sinh học, Lịch sử</option>
+          <option value="C13">C13 — Văn, Sinh học, Địa lý</option>
+          <option value="C14">C14 — Văn, Toán, GDCD</option>
+        </optgroup>
+        <optgroup label="Khối D — Kết hợp Tiếng Anh &amp; Xã hội">
+          <option value="D01">D01 — Văn, Toán, Tiếng Anh</option>
+          <option value="D07">D07 — Toán, Hóa học, Tiếng Anh</option>
+          <option value="D08">D08 — Toán, Sinh học, Tiếng Anh</option>
+          <option value="D09">D09 — Toán, Lịch sử, Tiếng Anh</option>
+          <option value="D10">D10 — Toán, Địa lý, Tiếng Anh</option>
+          <option value="D11">D11 — Văn, Vật lý, Tiếng Anh</option>
+          <option value="D12">D12 — Văn, Hóa học, Tiếng Anh</option>
+          <option value="D13">D13 — Văn, Sinh học, Tiếng Anh</option>
+          <option value="D14">D14 — Văn, Lịch sử, Tiếng Anh</option>
+          <option value="D15">D15 — Văn, Địa lý, Tiếng Anh</option>
+          <option value="D66">D66 — Văn, GDCD, Tiếng Anh</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="form-group custom-dropdown-container">
+      <label>Ngành/Mã ngành quan tâm:</label>
+      <input
+        type="text"
+        id="ma_nganh"
+        autocomplete="off"
+        placeholder="Gõ để tìm kiếm ngành hoặc mã ngành..."
+        required
+      />
+      <div id="majors_dropdown" class="custom-dropdown-list"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Tên trường bạn muốn kiểm tra <span class="label-optional">(tuỳ chọn)</span>:</label>
+      <textarea
+        id="query"
+        rows="2"
+        placeholder="Ví dụ: Đại học Bách Khoa Hà Nội, ĐH Y Dược TP.HCM, Học viện Kỹ thuật Mật mã..."
+      ></textarea>
+      <p class="form-hint">💡 Nhập tên trường bạn muốn xem xác suất trúng tuyển. Nếu để trống, AI sẽ tự động gợi ý <strong>3 trường có tỉ lệ đỗ cao nhất</strong> dựa trên điểm và ngành đã nhập ở trên.</p>
+    </div>
+
+    <button id="btn-submit" onclick="hoiDap()" class="btn-primary btn-large">
+      <i class="fas fa-brain"></i> Khám Phá Cơ Hội Của Tôi
+    </button>
+  </div>
+
+  <!-- Kết quả -->
+  <div class="result-card" id="result-card" style="display: none">
+    <h3>🤖 Kết quả tư vấn từ AI:</h3>
+    <div id="loading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin fa-3x"></i>
+      <p>Đang phân tích dữ liệu điểm chuẩn 2020-2025...</p>
+    </div>
+    <div id="result-content" class="markdown-body"></div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script src="/static/js/app.js?v=2026"></script>
+{% endblock %}
