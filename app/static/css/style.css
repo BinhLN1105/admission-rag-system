@@ -1617,3 +1617,99 @@ h2 {
   }
 }
 
+/* ====================== AI CONSULTATION RESULT TABS & LOADING ====================== */
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.toggle-container {
+  display: flex;
+  gap: 5px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 10px;
+}
+.btn-toggle {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-toggle.active {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  color: #2563eb;
+}
+.llm-badge {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.loading-mini {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.dot-flashing {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #2563eb;
+  color: #2563eb;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+.dot-flashing::before, .dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+.dot-flashing::before {
+  left: -12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #2563eb;
+  color: #2563eb;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0s;
+}
+.dot-flashing::after {
+  left: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #2563eb;
+  color: #2563eb;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 1s;
+}
+@keyframes dot-flashing {
+  0% { background-color: #2563eb; }
+  50%, 100% { background-color: rgba(37, 99, 235, 0.2); }
+}
+.result-view { display: none; min-height: 200px; }
+.result-view.active { display: block; animation: slideUp 0.4s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

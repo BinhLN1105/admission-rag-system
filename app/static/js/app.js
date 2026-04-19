@@ -9,7 +9,11 @@ const elements = {
   majorsDropdown: document.getElementById("majors_dropdown"),
   resultCard: document.getElementById("result-card"),
   loading: document.getElementById("loading"),
-  resultContent: document.getElementById("result-content"),
+  resultOriginal: document.getElementById("result-original"),
+  resultLLM: document.getElementById("result-llm"),
+  llmContent: document.getElementById("llm-content"),
+  llmMiniLoader: document.getElementById("llm-mini-loader"),
+  viewToggle: document.getElementById("view-toggle"),
 };
 
 let allMajors = [];
@@ -100,9 +104,12 @@ window.hoiDap = async function () {
   // Show loading
   elements.resultCard.style.display = "block";
   elements.loading.style.display = "block";
-  elements.resultContent.style.display = "none";
+  elements.resultOriginal.classList.remove('active');
+  elements.resultLLM.classList.remove('active');
+  elements.viewToggle.style.display = "none";
 
   try {
+    // 1. GỌI API TƯ VẤN NHANH (BẢN GỐC + FACTS)
     const res = await fetch("/api/tu-van", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,19 +117,70 @@ window.hoiDap = async function () {
     });
 
     const data = await res.json();
-
     elements.loading.style.display = "none";
-    elements.resultContent.innerHTML = marked.parse(
-      data.ket_qua || "Không có kết quả."
-    );
-    elements.resultContent.style.display = "block";
+    
+    // Render kết quả gốc ngay lập tức
+    elements.resultOriginal.innerHTML = marked.parse(data.ket_qua || "Không có kết quả.");
+    
+    // Setup Tab AI ở trạng thái chờ
+    elements.viewToggle.style.display = "flex";
+    elements.llmContent.innerHTML = "";
+    elements.llmMiniLoader.style.display = "inline-flex";
+    
+    // Mặc định hiển thị tab AI (đang loading)
+    switchView('llm');
 
-    utils.showToast("AI đã tư vấn xong!", "success");
+    utils.showToast("Đã có kết quả tư vấn nhanh!", "success");
+
+    // 2. GỌI API LLM (PHÂN TÍCH CHUYÊN SÂU) - CHẠY NGẦM
+    if (data.facts) {
+      try {
+        const llmRes = await fetch("/api/tu-van-llm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data.facts),
+        });
+        const llmData = await llmRes.json();
+        
+        elements.llmMiniLoader.style.display = "none";
+        if (llmData.ket_qua_llm) {
+          elements.llmContent.innerHTML = marked.parse(llmData.ket_qua_llm);
+        } else {
+          elements.llmContent.innerHTML = "<p>⚠️ Không thể khởi tạo phân tích AI lúc này. Bạn vui lòng xem bản gốc nhé.</p>";
+        }
+      } catch (llmErr) {
+        console.error("LLM API Error:", llmErr);
+        elements.llmMiniLoader.style.display = "none";
+        elements.llmContent.innerHTML = "<p>❌ Lỗi kết nối dịch vụ AI.</p>";
+      }
+    } else {
+      elements.llmMiniLoader.style.display = "none";
+      elements.llmContent.innerHTML = "<p>ℹ️ Không có đủ dữ liệu để phân tích AI chuyên sâu.</p>";
+    }
+
   } catch (err) {
+    console.error("Main API Error:", err);
     elements.loading.style.display = "none";
-    elements.resultContent.innerHTML = `<p style="color:#ef4444;">❌ Lỗi kết nối server. Vui lòng thử lại.</p>`;
-    elements.resultContent.style.display = "block";
+    elements.resultOriginal.innerHTML = `<p style="color:#ef4444;">❌ Lỗi kết nối server. Vui lòng thử lại.</p>`;
+    elements.viewToggle.style.display = "none";
+    switchView('original');
   }
+};
+
+// Toggle giữa các view
+window.switchView = function(view) {
+  const views = ['original', 'llm'];
+  views.forEach(v => {
+    const el = document.getElementById(`result-${v}`);
+    const btn = document.querySelector(`.btn-toggle[onclick*="'${v}'"]`);
+    if (v === view) {
+      el.classList.add('active');
+      if (btn) btn.classList.add('active');
+    } else {
+      el.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+  });
 };
 
 // Initialize

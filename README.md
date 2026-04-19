@@ -86,7 +86,16 @@ source venv/bin/activate # Linux/Mac
 pip install -r requirements.txt
 ```
 
-**2. Chuẩn bị dữ liệu & Huấn luyện**
+**2. Cấu hình biến môi trường (Gemini AI)**
+Dự án sử dụng Gemini 2.0 Flash để tạo phản hồi tự nhiên. Bạn cần tạo file `.env` tại thư mục gốc của dự án:
+```bash
+# Tạo file .env
+echo GEMINI_API_KEY=your_gemini_api_key_here > .env
+```
+> [!TIP]
+> Thay thế `your_gemini_api_key_here` bằng mã API Key lấy từ [Google AI Studio](https://aistudio.google.com/). Nếu không có Key, hệ thống sẽ tự động dùng văn bản mẫu (fallback) và vẫn hoạt động bình thường.
+
+**3. Chuẩn bị dữ liệu & Huấn luyện**
 Hệ thống cần trải qua quy trình xử lý dữ liệu trước khi chạy:
 ```bash
 # 1. Gộp và chuẩn hóa mã ngành (2023-2025)
@@ -102,7 +111,7 @@ python src/ml_model/train.py
 python src/rag/build_index.py
 ```
 
-**3. Khởi Chạy Server**
+**4. Khởi Chạy Server**
 ```bash
 python -m app.main
 ```

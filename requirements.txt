@@ -12,3 +12,5 @@ requests
 beautifulsoup4
 colorama
 seaborn
+google-generativeai
+python-dotenv

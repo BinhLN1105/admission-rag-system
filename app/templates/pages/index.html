@@ -1,7 +1,9 @@
 {% extends "base.html" %} {% block title %}Hệ Thống Tư Vấn Tuyển Sinh AI 2026{%
 endblock %} {% block description %}Phân tích điểm thi THPT, tổ hợp xét tuyển và
-dự đoán cơ hội đậu đại học năm 2026 chính xác nhất{% endblock %} {% block
-content %}
+dự đoán cơ hội đậu đại học năm 2026 chính xác nhất{% endblock %}
+{% block head_extra %}
+{% endblock %}
+{% block content %}
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero-overlay"></div>
@@ -209,12 +211,30 @@ content %}
 
   <!-- Kết quả -->
   <div class="result-card" id="result-card" style="display: none">
-    <h3>🤖 Kết quả tư vấn từ AI:</h3>
+    <div class="result-header">
+      <div class="toggle-container" id="view-toggle" style="display: none;">
+        <button class="btn-toggle active" id="tab-llm" onclick="switchView('llm')">
+          <i class="fas fa-sparkles"></i> Phân tích AI <span class="llm-badge">Lab</span>
+        </button>
+        <button class="btn-toggle" id="tab-original" onclick="switchView('original')">
+          <i class="fas fa-table"></i> Tư vấn nhanh (Bản gốc)
+        </button>
+      </div>
+    </div>
+    
     <div id="loading" class="loading-spinner">
       <i class="fas fa-spinner fa-spin fa-3x"></i>
       <p>Đang phân tích dữ liệu điểm chuẩn 2020-2025...</p>
     </div>
-    <div id="result-content" class="markdown-body"></div>
+    
+    <div id="result-llm" class="result-view active markdown-body">
+      <div class="loading-mini" id="llm-mini-loader">
+        <div class="dot-flashing"></div>
+        <span>AI đang đọc dữ liệu và viết phân tích...</span>
+      </div>
+      <div id="llm-content"></div>
+    </div>
+    <div id="result-original" class="result-view markdown-body"></div>
   </div>
 </section>
 {% endblock %} {% block scripts %}

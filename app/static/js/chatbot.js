@@ -121,9 +121,9 @@ async function sendMessage() {
     typingIndicator.remove();
 
     if (res.ok) {
-      addChatMessage(
-        data.reply || "Tôi chưa hiểu rõ câu hỏi này. Bạn thử hỏi chi tiết hơn nhé!"
-      );
+      // Ưu tiên hiển thị câu trả lời từ LLM (Ngôn ngữ tự nhiên)
+      const botResponse = data.reply_llm || data.reply || "Tôi chưa hiểu rõ câu hỏi này. Bạn thử hỏi chi tiết hơn nhé!";
+      addChatMessage(botResponse);
     } else {
       addChatMessage("⚠️ Server đang bận, vui lòng thử lại sau.");
     }

@@ -2,6 +2,9 @@ import os
 import pandas as pd
 from fastapi import APIRouter, HTTPException
 from app.schema import InferenceRequest, InferenceResponse, ChatRequest, ChatResponse
+from src.llm.llm_service import LLMService
+
+llm_service = LLMService()
 
 # ==================== LAZY LOADING PIPELINE ====================
 pipeline = None
@@ -39,14 +42,22 @@ async def tu_van_tuyen_sinh(request: InferenceRequest):
 
     try:
         pipe = get_pipeline()
-        result = pipe.run(
+        run_res = pipe.run(
             query=request.query or "",
             ma_nganh=request.ma_nganh,
             to_hop=request.to_hop,
             diem=request.diem_thi,
             khu_vuc=request.khu_vuc
         )
-        return InferenceResponse(ket_qua=result)
+        
+        original_text = run_res["original_text"]
+        facts = run_res["facts"]
+        
+        return InferenceResponse(
+            ket_qua=original_text,
+            facts=facts,
+            ket_qua_llm=None # Sẽ gọi riêng bằng API /tu-van-llm
+        )
 
     except Exception as e:
         print(f"Lỗi khi chạy pipeline: {e}")
@@ -54,6 +65,20 @@ async def tu_van_tuyen_sinh(request: InferenceRequest):
             status_code=500,
             detail="Đã xảy ra lỗi trong quá trình tư vấn. Vui lòng thử lại sau."
         )
+
+
+@router.post("/tu-van-llm")
+async def tu_van_llm(facts: dict):
+    """Endpoint riêng để gọi LLM — giúp tách luồng xử lý cho UI mượt mà hơn"""
+    try:
+        if not facts:
+            return {"ket_qua_llm": None}
+        
+        llm_text = await llm_service.format_form_response(facts)
+        return {"ket_qua_llm": llm_text}
+    except Exception as e:
+        print(f"Lỗi khi gọi LLM: {e}")
+        return {"ket_qua_llm": None}
 
 
 @router.post("/chat", response_model=ChatResponse)
@@ -245,7 +270,18 @@ async def chat_tuyen_sinh(request: ChatRequest):
             f"{verdict}\n\n"
             f"💡 *Để tính xác suất trúng tuyển chính xác hơn, hãy điền thông tin vào **form tư vấn** bên trên nhé!*"
         )
-        return ChatResponse(reply=reply)
+        
+        # Gọi LLM cho Chatbot
+        reply_llm = await llm_service.format_chat_response(
+            user_msg=msg,
+            rag_context=context,
+            ml_verdict=verdict
+        )
+        
+        return ChatResponse(
+            reply=reply,
+            reply_llm=reply_llm
+        )
 
     except Exception as e:
         print(f"Lỗi chatbot: {e}")

@@ -157,10 +157,17 @@ class InferencePipeline:
 
     def run(self, query: str, ma_nganh: str, to_hop: str, diem: float, khu_vuc: str) -> str:
         if diem > 31:
-            return "Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia). Điểm bạn nhập vượt quá 30 điểm nên chúng tôi rất xin lỗi vì sự bất tiện này. Bạn hãy sử dụng tính năng tính toán điểm tự động để có thể đưa ra kết quả chính xác nhất."
+            return {
+                "original_text": "Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia). Điểm bạn nhập vượt quá 30 điểm nên chúng tôi rất xin lỗi vì sự bất tiện này. Bạn hãy sử dụng tính năng tính toán điểm tự động để có thể đưa ra kết quả chính xác nhất.",
+                "facts": None
+            }
             
         if not query or len(query.strip()) < 2:
-            return self._auto_recommend_top_3(ma_nganh, to_hop, diem, khu_vuc)
+            recommendation_text = self._auto_recommend_top_3(ma_nganh, to_hop, diem, khu_vuc)
+            return {
+                "original_text": recommendation_text,
+                "facts": None
+            }
 
         # Bước 1: Trích xuất mã trường từ query
         query_upper = query.upper()
@@ -173,8 +180,11 @@ class InferencePipeline:
             ma_truong_query = self._fuzzy_find_school(query)
 
         if not ma_truong_query:
-            context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, to_hop=to_hop, top_k=2)
-            return f"Theo thông tin tìm kiếm:\n{context}\n\n⚠️ **Lưu ý:** Không nhận diện được bạn đang hỏi trường nào. Vui lòng ghi rõ tên trường (VD: Bách Khoa, BKA...) hoặc để trống câu hỏi để AI tự động tìm trường."
+            context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, to_hop=to_hop, top_k=3)
+            return {
+                "original_text": f"Theo thông tin tìm kiếm:\n{context}\n\n⚠️ **Lưu ý:** Không nhận diện được bạn đang hỏi trường nào. Vui lòng ghi rõ tên trường (VD: Bách Khoa, BKA...) hoặc để trống câu hỏi để AI tự động tìm trường.",
+                "facts": None
+            }
             
         ma_truong = ma_truong_query
         
@@ -204,23 +214,29 @@ class InferencePipeline:
                     similar_majors_msg = f"\n\n💡 **Gợi ý:** Tuy nhiên, trường có các ngành tương đương thuộc nhóm **Kinh tế - Quản lý**: **{', '.join(names)}**. Bạn có thể thử hỏi lại với tên các ngành này."
             
             # RAG theo tên trường + query thay vì dùng mã ngành không tồn tại
-            context = self.retriever.retrieve(query=f"{query} {ma_truong}", top_k=2)
-            return f"⚠️ **Thông báo:** Rất tiếc, trường **{ma_truong}** không tuyển sinh ngành có mã **{ma_nganh}** cho bất kỳ tổ hợp môn nào.{similar_majors_msg}\n\nThông tin tham khảo từ RAG:\n{context}"
+            context = self.retriever.retrieve(query=f"{query} {ma_truong}", top_k=3)
+            return {
+                "original_text": f"⚠️ **Thông báo:** Rất tiếc, trường **{ma_truong}** không tuyển sinh ngành có mã **{ma_nganh}** cho bất kỳ tổ hợp môn nào.{similar_majors_msg}\n\nThông tin tham khảo từ RAG:\n{context}",
+                "facts": None
+            }
 
         # 2. Nếu có ngành nhưng không có tổ hợp môn yêu cầu -> dừng lại, báo ngay
         school_majors = school_any_tohop[school_any_tohop["ma_to_hop"].astype(str) == str(to_hop)]
         if school_majors.empty:
             available_tohops = school_any_tohop["ma_to_hop"].unique().tolist()
             ten_truong_display = school_any_tohop["ten_truong"].iloc[0] if not school_any_tohop.empty else ma_truong
-            return (
-                f"⚠️ **Thông báo:** Trường **{ten_truong_display}** ({ma_truong}) **không xét tuyển khối {to_hop}** "
-                f"cho ngành mã **{ma_nganh}** trong dữ liệu hiện có.\n\n"
-                f"📋 **Các khối xét tuyển ngành này tại trường:** `{'`, `'.join(available_tohops)}`\n\n"
-                f"👉 Bạn hãy chọn lại tổ hợp môn phù hợp ở trên và thử lại nhé!"
-            )
+            return {
+                "original_text": (
+                    f"⚠️ **Thông báo:** Trường **{ten_truong_display}** ({ma_truong}) **không xét tuyển khối {to_hop}** "
+                    f"cho ngành mã **{ma_nganh}** trong dữ liệu hiện có.\n\n"
+                    f"📋 **Các khối xét tuyển ngành này tại trường:** `{'`, `'.join(available_tohops)}`\n\n"
+                    f"👉 Bạn hãy chọn lại tổ hợp môn phù hợp ở trên và thử lại nhé!"
+                ),
+                "facts": None
+            }
 
         # Bước 3: RAG
-        context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, to_hop=to_hop, ma_truong=ma_truong, top_k=2)
+        context = self.retriever.retrieve(query=query, ma_nganh=ma_nganh, to_hop=to_hop, ma_truong=ma_truong, top_k=3)
 
         # Chi tiết hệ đào tạo
         program_details = []
@@ -252,7 +268,10 @@ class InferencePipeline:
 
         max_dc = max([dc_2023, dc_2024, dc_2025])
         if diem <= 31 and max_dc > 35:
-            return f"Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia) mà trường **{ma_truong}** với mã ngành **{ma_nganh}** mà bạn tìm kiếm trong các năm gần đây được xét tuyển trên thang điểm riêng (có thể là điểm hệ số 40, ĐGNL 100, 1200...) nên chúng tôi rất xin lỗi vì sự bất tiện này.\n\nThông tin tham khảo từ hệ thống:\n{context}"
+            return {
+                "original_text": f"Xin thứ lỗi vì hệ thống hiện tại chỉ có thể đưa ra kết quả dự đoán trên thang điểm 30 (tổ hợp môn thi thpt quốc gia) mà trường **{ma_truong}** với mã ngành **{ma_nganh}** mà bạn tìm kiếm trong các năm gần đây được xét tuyển trên thang điểm riêng (có thể là điểm hệ số 40, ĐGNL 100, 1200...) nên chúng tôi rất xin lỗi vì sự bất tiện này.\n\nThông tin tham khảo từ hệ thống:\n{context}",
+                "facts": None
+            }
 
         # Bước 4: ML Dự đoán
         ml_res = predict_probability(
@@ -282,7 +301,23 @@ class InferencePipeline:
             f"- **Đánh giá:** {danh_gia}"
             f"{disclaimer_note}"
         )
-        return response
+        return {
+            "original_text": response,
+            "facts": {
+                "ten_truong": ten_truong,
+                "ma_truong": ma_truong,
+                "ten_nganh": ten_nganh,
+                "to_hop": to_hop,
+                "khu_vuc": khu_vuc,
+                "dc_2023": dc_2023,
+                "dc_2024": dc_2024,
+                "dc_2025": dc_2025,
+                "diem_uu_tien": ml_res['diem_co_uu_tien'],
+                "phan_tram": prob_str,
+                "danh_gia": danh_gia,
+                "context_rag": context
+            }
+        }
 
     def _auto_recommend_top_3(self, ma_nganh: str, to_hop: str, diem: float, khu_vuc: str) -> str:
         df_nganh = self.df_diem_chuan[
